@@ -1,17 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/error_handler.dart';
-import 'package:todo_list_app/logger.dart';
+import 'package:todo_list_app/core/styles/app_style.dart';
+import 'package:todo_list_app/core/styles/palettes/dark_palette.dart';
+import 'package:todo_list_app/core/styles/palettes/light_palette.dart';
+import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/utils/error_handler.dart';
+import 'package:todo_list_app/core/utils/logger.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runZonedGuarded(() {
     initLogger();
     logger.info('Start main');
 
     ErrorHandler.init();
-    runApp(const MainApp());
+    runApp(
+      const MainApp(),
+    );
   }, ErrorHandler.recordError);
 }
 
@@ -20,29 +28,48 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      home: const Scaffold(
-        body: HomePage(),
+    return BlocProvider<ThemeBloc>(
+      create: (context) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          final currentPalette = state.isDark ? darkPalette : lightPalette;
+          return MaterialApp(
+            theme: AppStyle(currentPalette).themeData,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            onGenerateTitle: (context) =>
+                AppLocalizations.of(context)!.appTitle,
+            home: const Scaffold(
+              body: HomePage(),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+
     return Center(
-      child: Text(AppLocalizations.of(context)!.appTitle),
+      child: Column(
+        children: [
+          Text(AppLocalizations.of(context)!.appTitle),
+          TextButton(
+            onPressed: () {
+              logger.info(
+                  themeBloc.state.isDark ? 'Dark -> Light' : 'Light -> Dark');
+              themeBloc.add(ToggleThemeEvent());
+            },
+            child: const Text('Switch theme'),
+          ),
+        ],
+      ),
     );
   }
 }
