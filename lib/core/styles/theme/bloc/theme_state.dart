@@ -1,7 +1,7 @@
 part of 'theme_bloc.dart';
 
 class ThemeState {
-  final bool isDark;
+  final bool isDarkTheme;
 
-  ThemeState({required this.isDark});
+  ThemeState({required this.isDarkTheme});
 }

@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:todo_list_app/core/styles/app_style.dart';
 import 'package:todo_list_app/core/styles/palettes/dark_palette.dart';
 import 'package:todo_list_app/core/styles/palettes/light_palette.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/core/utils/error_handler.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
+import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runZonedGuarded(() {
     initLogger();
     logger.info('Start main');
@@ -32,7 +33,7 @@ class MainApp extends StatelessWidget {
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          final currentPalette = state.isDark ? darkPalette : lightPalette;
+          final currentPalette = state.isDarkTheme ? darkPalette : lightPalette;
           return MaterialApp(
             theme: AppStyle(currentPalette).themeData,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -40,35 +41,10 @@ class MainApp extends StatelessWidget {
             onGenerateTitle: (context) =>
                 AppLocalizations.of(context)!.appTitle,
             home: const Scaffold(
-              body: HomePage(),
+              body: HomeScreen(),
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final themeBloc = BlocProvider.of<ThemeBloc>(context);
-
-    return Center(
-      child: Column(
-        children: [
-          Text(AppLocalizations.of(context)!.appTitle),
-          TextButton(
-            onPressed: () {
-              logger.info(
-                  themeBloc.state.isDark ? 'Dark -> Light' : 'Light -> Dark');
-              themeBloc.add(ToggleThemeEvent());
-            },
-            child: const Text('Switch theme'),
-          ),
-        ],
       ),
     );
   }
