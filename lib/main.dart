@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeBloc>(
-          create: (context) => ThemeBloc(),
+          create: (context) => ThemeBloc(isDark: true),
         ),
         BlocProvider<TasksBloc>(
           create: (context) => TasksBloc(),
@@ -41,6 +41,7 @@ class MainApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
+          logger.info(context.read<ThemeBloc>().state.isDarkTheme);
           final currentPalette = state.isDarkTheme ? darkPalette : lightPalette;
           return MaterialApp(
             theme: AppStyle(currentPalette).themeData,

@@ -39,17 +39,14 @@ class ColorPalette {
 
   final Brightness brightness;
 
-  // Support
   final Color colorSupportSeparator;
   final Color colorSupportOverlay;
 
-  // Label
   final Color colorLabelPrimary;
   final Color colorLabelSecondary;
   final Color colorLabelTertiary;
   final Color colorLabelDisable;
 
-  // Color
   final Color colorRed;
   final Color colorGreen;
   final Color colorBlue;
@@ -57,7 +54,6 @@ class ColorPalette {
   final Color colorGrayLight;
   final Color colorWhite;
 
-  // Back
   final Color colorBackPrimary;
   final Color colorBackSecondary;
   final Color colorBackElevated;

@@ -7,8 +7,6 @@ class AppStyle {
 
   AppStyle(this.colorPalette);
 
-  bool get _isDark => colorPalette.brightness == Brightness.dark;
-
   ThemeData get themeData => ThemeData(
         brightness: colorPalette.brightness,
         textTheme: appTextStyles.textTheme,
@@ -17,7 +15,6 @@ class AppStyle {
         hintColor: colorPalette.colorLabelTertiary,
         dividerColor: colorPalette.colorSupportSeparator,
         disabledColor: colorPalette.colorLabelDisable,
-        primaryColor: colorPalette.colorLabelPrimary,
       );
 
   AppTextStyles get appTextStyles => AppTextStyles(colorPalette: colorPalette);

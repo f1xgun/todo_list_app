@@ -37,3 +37,7 @@ class DeleteTask extends TasksEvent {
   @override
   List<Object> get props => [task];
 }
+
+class ToggleVisibilityCompletedFilter extends TasksEvent {
+  const ToggleVisibilityCompletedFilter();
+}

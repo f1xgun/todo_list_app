@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
@@ -21,12 +23,13 @@ class TaskCheckbox extends StatefulWidget {
 class _TaskCheckboxState extends State<TaskCheckbox> {
   @override
   Widget build(BuildContext context) {
+    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
           color:
               !widget.value && widget.task.importance == Importance.HighPriority
-                  ? Colors.red.withOpacity(0.16)
+                  ? colors.colorRed.withOpacity(0.16)
                   : Colors.transparent,
         ),
         height: 18,
@@ -34,11 +37,12 @@ class _TaskCheckboxState extends State<TaskCheckbox> {
         margin: const EdgeInsets.only(right: 15),
         child: Checkbox(
           value: widget.value,
-          activeColor: Colors.green,
+          activeColor: colors.colorGreen,
           fillColor:
               !widget.value && widget.task.importance == Importance.HighPriority
-                  ? MaterialStateProperty.all(Colors.red)
+                  ? MaterialStateProperty.all(colors.colorRed)
                   : null,
+          checkColor: colors.colorBackPrimary,
           onChanged: (_) {
             widget.onChanged(!widget.value);
           },
