@@ -11,6 +11,7 @@ import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/core/utils/error_handler.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
+import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 void main() {
   runZonedGuarded(() {
@@ -29,8 +30,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
-      create: (context) => ThemeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(
+          create: (context) => ThemeBloc(),
+        ),
+        BlocProvider<TasksBloc>(
+          create: (context) => TasksBloc(),
+        ),
+      ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
           final currentPalette = state.isDarkTheme ? darkPalette : lightPalette;

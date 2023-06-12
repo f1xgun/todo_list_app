@@ -1,3 +1,13 @@
 {
-  "appTitle": "Список дел"
+  "appTitle": "Список дел",
+  "tasksCompletedCount": "Выполнено - {tasksCompletedCount}",
+  "addNewTaskText": "Новое",
+  "addNewTaskHinText": "Что надо сделать...",
+  "importance": "Важность",
+  "importanceNo": "Нет",
+  "importanceLowPriority": "Низкий",
+  "importanceHighPriority": "!! Высокий",
+  "deadlineTitle": "Сделать до",
+  "delete": "Удалить",
+  "save": "сохранить"
 }
