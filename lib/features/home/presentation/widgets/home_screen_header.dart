@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
   const HomeScreenHeaderDelegate();
@@ -11,9 +13,9 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
     final themeData = Theme.of(context);
     final text = themeData.textTheme;
     final diff = expandedHeight - kToolbarHeight;
-    final t = (diff - shrinkOffset) / diff;
+    final k = (diff - shrinkOffset) / diff;
     // ignore: omit_local_variable_types
-    final double percentOfShrinkOffset = t > 0 ? t : 0;
+    final double percentOfShrinkOffset = k > 0 ? k : 0;
 
     return Material(
       color: themeData.scaffoldBackgroundColor,
@@ -21,7 +23,7 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
           percentOfShrinkOffset <= 0.05 ? 5 - 100 * percentOfShrinkOffset : 0,
       child: Padding(
         padding: EdgeInsets.only(
-          bottom: 16,
+          bottom: 16 + percentOfShrinkOffset * 10,
           right: 20 + percentOfShrinkOffset * 3,
         ),
         child: Column(
@@ -46,12 +48,22 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                       Padding(
                         padding:
                             EdgeInsets.only(top: 6 * percentOfShrinkOffset),
-                        child: Text(
-                          AppLocalizations.of(context)!.tasksCompletedCount(2),
-                          style: text.bodyMedium?.copyWith(
-                            color: themeData.hintColor,
-                            fontSize: 16 * percentOfShrinkOffset,
-                          ),
+                        child: BlocBuilder<TasksBloc, TasksState>(
+                          builder: (context, state) {
+                            return Text(
+                              AppLocalizations.of(context)!.tasksCompletedCount(
+                                BlocProvider.of<TasksBloc>(context)
+                                    .state
+                                    .tasks
+                                    .where((element) => element.isDone)
+                                    .length,
+                              ),
+                              style: text.bodyMedium?.copyWith(
+                                color: themeData.hintColor,
+                                fontSize: 16 * percentOfShrinkOffset,
+                              ),
+                            );
+                          },
                         ),
                       ),
                   ],

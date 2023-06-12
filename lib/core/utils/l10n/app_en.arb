@@ -2,7 +2,7 @@
   "appTitle": "Todo List",
   "tasksCompletedCount": "Completed - {tasksCompletedCount}",
   "addNewTaskText": "New",
-  "addNewTaskHinText": "What you need to do...",
+  "addNewTaskHintText": "What you need to do...",
   "importance": "Importance",
   "importanceNo": "No",
   "importanceLowPriority": "Low",

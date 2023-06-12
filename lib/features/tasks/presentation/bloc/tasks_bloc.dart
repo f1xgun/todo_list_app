@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
 part 'tasks_event.dart';
@@ -22,6 +23,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     final updatedTasks = state.tasks.map((task) {
       return task.id == event.task.id ? event.task : task;
     }).toList();
+    logger.info(updatedTasks);
     emit(TasksState(tasks: updatedTasks));
   }
 

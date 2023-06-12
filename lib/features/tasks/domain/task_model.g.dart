@@ -14,8 +14,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
               Importance.None,
       isDone: json['isDone'] as bool? ?? false,
       isDeleted: json['isDeleted'] as bool? ?? false,
-      deadline: json['deadline'] as String? ?? '',
-      lastUpdated: json['lastUpdated'] as String? ?? '',
+      deadline: json['deadline'] == null
+          ? null
+          : DateTime.parse(json['deadline'] as String),
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -24,8 +25,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'importance': _$ImportanceEnumMap[instance.importance]!,
       'isDone': instance.isDone,
       'isDeleted': instance.isDeleted,
-      'deadline': instance.deadline,
-      'lastUpdated': instance.lastUpdated,
+      'deadline': instance.deadline?.toIso8601String(),
     };
 
 const _$ImportanceEnumMap = {

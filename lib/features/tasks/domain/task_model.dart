@@ -12,23 +12,37 @@ class Task extends Equatable {
   final Importance importance;
   final bool isDone;
   final bool isDeleted;
-  final String? deadline;
-  final String? lastUpdated;
+  final DateTime? deadline;
 
-  Task(
-      {required this.text,
-      String? id,
-      this.importance = Importance.None,
-      this.isDone = false,
-      this.isDeleted = false,
-      this.deadline = '',
-      this.lastUpdated = ''})
-      : id = id ?? const Uuid().v4(),
+  Task({
+    required this.text,
+    String? id,
+    this.importance = Importance.None,
+    this.isDone = false,
+    this.isDeleted = false,
+    this.deadline,
+  })  : id = id ?? const Uuid().v4(),
         super();
 
   @override
   List<Object?> get props =>
-      [id, text, importance, isDone, isDeleted, deadline, lastUpdated];
+      [id, text, importance, isDone, isDeleted, deadline];
+
+  Task copyWith(
+      {String? id,
+      String? text,
+      Importance? importance,
+      bool? isDone,
+      bool? isDeleted,
+      DateTime? deadline}) {
+    return Task(
+        id: id ?? this.id,
+        text: text ?? this.text,
+        importance: importance ?? this.importance,
+        isDone: isDone ?? this.isDone,
+        isDeleted: isDeleted ?? this.isDeleted,
+        deadline: deadline ?? this.deadline);
+  }
 
   static Task fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 

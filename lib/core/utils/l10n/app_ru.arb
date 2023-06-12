@@ -2,7 +2,7 @@
   "appTitle": "Список дел",
   "tasksCompletedCount": "Выполнено - {tasksCompletedCount}",
   "addNewTaskText": "Новое",
-  "addNewTaskHinText": "Что надо сделать...",
+  "addNewTaskHintText": "Что надо сделать...",
   "importance": "Важность",
   "importanceNo": "Нет",
   "importanceLowPriority": "Низкий",

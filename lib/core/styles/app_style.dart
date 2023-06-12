@@ -17,6 +17,7 @@ class AppStyle {
         hintColor: colorPalette.colorLabelTertiary,
         dividerColor: colorPalette.colorSupportSeparator,
         disabledColor: colorPalette.colorLabelDisable,
+        primaryColor: colorPalette.colorLabelPrimary,
       );
 
   AppTextStyles get appTextStyles => AppTextStyles(colorPalette: colorPalette);
