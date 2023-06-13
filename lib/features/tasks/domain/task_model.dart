@@ -17,7 +17,7 @@ class Task extends Equatable {
   Task({
     required this.text,
     String? id,
-    this.importance = Importance.None,
+    this.importance = Importance.none,
     this.isDone = false,
     this.isDeleted = false,
     this.deadline,

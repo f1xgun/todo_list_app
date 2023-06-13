@@ -12,5 +12,4 @@ class ThemeState extends Equatable {
 
 class ThemeInitial extends ThemeState {
   const ThemeInitial({required super.isDarkTheme, required super.colorPalette});
-  
 }

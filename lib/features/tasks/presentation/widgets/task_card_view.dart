@@ -41,7 +41,7 @@ class TaskCardView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   text: TextSpan(
                     children: [
-                      if (task.importance == Importance.HighPriority)
+                      if (task.importance == Importance.highPriority)
                         WidgetSpan(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 6),
@@ -59,7 +59,7 @@ class TaskCardView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (task.importance == Importance.LowPriority)
+                      if (task.importance == Importance.lowPriority)
                         WidgetSpan(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 6),
@@ -106,9 +106,16 @@ class TaskCardView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 14.0),
-            child: Icon(
-              Icons.info_outline,
+            child: IconButton(
+              icon: const Icon(Icons.info_outline),
               color: colors.colorLabelTertiary,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/task_details',
+                  arguments: {'task': task, 'isNew': false},
+                );
+              },
             ),
           ),
         ],

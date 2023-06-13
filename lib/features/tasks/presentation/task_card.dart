@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
-import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view.dart';
@@ -19,11 +18,9 @@ class TaskCard extends StatelessWidget {
       confirmDismiss: (direction) async {
         switch (direction) {
           case DismissDirection.endToStart:
-            logger.info('delete task');
             BlocProvider.of<TasksBloc>(context).add(DeleteTask(task: task));
             return true;
           case DismissDirection.startToEnd:
-            logger.info('done task');
             BlocProvider.of<TasksBloc>(context)
                 .add(UpdateTask(task: task.copyWith(isDone: true)));
             return false;

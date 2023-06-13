@@ -28,7 +28,7 @@ class _TaskCheckboxState extends State<TaskCheckbox> {
       child: Container(
         decoration: BoxDecoration(
           color:
-              !widget.value && widget.task.importance == Importance.HighPriority
+              !widget.value && widget.task.importance == Importance.highPriority
                   ? colors.colorRed.withOpacity(0.16)
                   : Colors.transparent,
         ),
@@ -39,7 +39,7 @@ class _TaskCheckboxState extends State<TaskCheckbox> {
           value: widget.value,
           activeColor: colors.colorGreen,
           fillColor:
-              !widget.value && widget.task.importance == Importance.HighPriority
+              !widget.value && widget.task.importance == Importance.highPriority
                   ? MaterialStateProperty.all(colors.colorRed)
                   : null,
           checkColor: colors.colorBackPrimary,

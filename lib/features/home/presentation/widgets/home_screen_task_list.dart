@@ -11,7 +11,6 @@ class HomeScreenTaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasksBloc = BlocProvider.of<TasksBloc>(context);
     final themeData = Theme.of(context);
     final text = themeData.textTheme;
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
