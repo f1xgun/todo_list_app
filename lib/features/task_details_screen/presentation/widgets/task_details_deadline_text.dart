@@ -12,18 +12,22 @@ class TaskDetailsDeadlineText extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     final colors = context.read<ThemeBloc>().state.colorPalette;
-    final date = context.read<TaskDetailsBloc>().state.currentTask.deadline;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(AppLocalizations.of(context)!.deadlineTitle),
-        if (date != null)
-          Text(
-            DateFormat('d MMMM yyyy', 'ru').format(date),
-            style: text.bodyMedium?.copyWith(color: colors.colorBlue),
-          )
-      ],
+    return BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
+      builder: (context, state) {
+        final date = state.currentTask.deadline;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(AppLocalizations.of(context)!.deadlineTitle),
+            if (date != null)
+              Text(
+                DateFormat('d MMMM yyyy', 'ru').format(date),
+                style: text.bodyMedium?.copyWith(color: colors.colorBlue),
+              )
+          ],
+        );
+      },
     );
   }
 }

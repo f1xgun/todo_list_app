@@ -18,7 +18,7 @@ class TaskDetailsTextField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: colors.colorBackSecondary,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
