@@ -18,11 +18,12 @@ class TaskCard extends StatelessWidget {
       confirmDismiss: (direction) async {
         switch (direction) {
           case DismissDirection.endToStart:
-            BlocProvider.of<TasksBloc>(context).add(DeleteTask(task: task));
+            context.read<TasksBloc>().add(DeleteTask(task: task));
             return true;
           case DismissDirection.startToEnd:
-            BlocProvider.of<TasksBloc>(context)
-                .add(UpdateTask(task: task.copyWith(isDone: true)));
+            context
+                .read<TasksBloc>()
+                .add(UpdateTask(task: task.copyWith(isDone: !task.isDone)));
             return false;
           default:
             return false;
