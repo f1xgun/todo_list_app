@@ -13,7 +13,6 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
           $enumDecodeNullable(_$ImportanceEnumMap, json['importance']) ??
               Importance.none,
       isDone: json['isDone'] as bool? ?? false,
-      isDeleted: json['isDeleted'] as bool? ?? false,
       deadline: json['deadline'] == null
           ? null
           : DateTime.parse(json['deadline'] as String),
@@ -22,9 +21,8 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'id': instance.id,
       'text': instance.text,
-      'importance': _$ImportanceEnumMap[instance.importance],
+      'importance': _$ImportanceEnumMap[instance.importance]!,
       'isDone': instance.isDone,
-      'isDeleted': instance.isDeleted,
       'deadline': instance.deadline?.toIso8601String(),
     };
 

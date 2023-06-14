@@ -33,3 +33,7 @@ class TaskDetailsUpdateDeadline extends TaskDetailsEvent {
   @override
   List<Object> get props => [deadline];
 }
+
+class TaskDetailsDeleteDeadline extends TaskDetailsEvent {
+  const TaskDetailsDeleteDeadline();
+}

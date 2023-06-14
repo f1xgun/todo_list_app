@@ -24,7 +24,7 @@ class TaskDetailsImportanceField extends StatelessWidget {
         for (var importance in Importance.values)
           PopupMenuItem<Importance>(
             value: importance,
-            child: PopupImportaceItem(importance: importance),
+            child: PopupImportanceItem(importance: importance),
           ),
       ],
       onSelected: onImportanceValueChanged,
@@ -72,8 +72,8 @@ class ImportanceText extends StatelessWidget {
   }
 }
 
-class PopupImportaceItem extends StatelessWidget {
-  const PopupImportaceItem({required this.importance, super.key});
+class PopupImportanceItem extends StatelessWidget {
+  const PopupImportanceItem({required this.importance, super.key});
 
   final Importance importance;
 

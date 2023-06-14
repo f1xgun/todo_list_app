@@ -51,6 +51,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     emit(
       TasksState(completedVisible: !state.completedVisible, tasks: state.tasks),
     );
-    logger.info('Toggle visibility tasks filter');
+    logger.info(
+        'Toggle visibility tasks filter: completed tasks ${!state.completedVisible ? 'visible' : 'invisible'}');
   }
 }

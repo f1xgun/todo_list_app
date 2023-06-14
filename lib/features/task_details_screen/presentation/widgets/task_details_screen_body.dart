@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/bloc/task_details_bloc.dart';
+import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_deadline_field.dart';
+import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_delete_button.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_importance_field.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_text_field.dart';
 
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
-
-import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class TaskDetailsScreenBody extends StatefulWidget {
   const TaskDetailsScreenBody({required this.controller, super.key});
@@ -43,7 +41,6 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final isNew = arguments['isNew'];
-    final colors = context.read<ThemeBloc>().state.colorPalette;
     return BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
       builder: (context, state) {
         return ListView(
@@ -59,50 +56,19 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
                 onImportanceValueChanged: updateImportance,
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
-              color: colors.colorSupportSeparator,
-              thickness: 1,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(AppLocalizations.of(context)!.deadlineTitle),
-                    ],
-                  ),
-                  const Spacer(),
-                  const Switch.adaptive(value: true, onChanged: null),
-                ],
-              ),
+              child: const TaskDetailsDeadlineField(),
             ),
-            Divider(
-              color: colors.colorSupportSeparator,
-              thickness: 1,
-            ),
+            const Divider(),
             Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextButton.icon(
-                style: TextButton.styleFrom(
-                  foregroundColor:
-                      isNew ? colors.colorLabelDisable : colors.colorRed,
-                ),
-                onPressed: isNew
-                    ? null
-                    : () {
-                        context
-                            .read<TasksBloc>()
-                            .add(DeleteTask(task: taskBloc.state.currentTask));
-                        Navigator.pop(context);
-                      },
-                icon: const Icon(Icons.delete),
-                label: Text(AppLocalizations.of(context)!.delete),
-              ),
+              child: TaskDetailsDeleteButton(isNew: isNew),
             ),
           ],
         );
