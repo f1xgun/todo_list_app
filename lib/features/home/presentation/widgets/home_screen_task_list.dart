@@ -12,9 +12,12 @@ class HomeScreenTaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, state) {
+      final completedTasks = state.tasks.where((task) => task.isDone).toList();
+      final noCompletedTasks =
+          state.tasks.where((task) => !task.isDone).toList();
       final tasks = !state.completedVisible
-          ? state.tasks.where((task) => !task.isDone).toList()
-          : state.tasks;
+          ? noCompletedTasks
+          : [...noCompletedTasks, ...completedTasks];
       return SliverToBoxAdapter(
         child: Card(
           color: colors.colorBackSecondary,

@@ -7,7 +7,7 @@
   "importanceNo": "No",
   "importanceLowPriority": "Low",
   "importanceHighPriority": "!! High",
-  "deadlineTitle": "Do before",
+  "deadlineTitle": "Due date",
   "delete": "Delete",
   "save": "save"
 }

@@ -19,7 +19,7 @@ class TaskCardViewTextTitle extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       text: TextSpan(
         children: [
-          if (task.importance != Importance.none)
+          if (task.importance != Importance.none && !task.isDone)
             WidgetSpan(
               child: TaskCardViewImportanceIcon(
                 importance: task.importance,

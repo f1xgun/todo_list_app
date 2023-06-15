@@ -26,25 +26,8 @@ void main() {
   }, ErrorHandler.recordError);
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  @override
-  void initState() {
-    super.initState();
-    final window = PlatformDispatcher.instance;
-
-    window.onPlatformBrightnessChanged = () {
-      WidgetsBinding.instance.handlePlatformBrightnessChanged();
-      final brightness = window.platformBrightness;
-      // TODO: add event to ThemeBloc
-    };
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +47,7 @@ class _MainAppState extends State<MainApp> {
         builder: (context, state) {
           final currentPalette = state.isDarkTheme ? darkPalette : lightPalette;
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: AppStyle(currentPalette).themeData,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,

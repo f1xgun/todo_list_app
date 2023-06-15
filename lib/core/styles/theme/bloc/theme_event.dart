@@ -9,7 +9,4 @@ class ToggleThemeEvent extends ThemeEvent {
   final Brightness brightness;
 
   const ToggleThemeEvent({required this.brightness});
-
-  @override
-  List<Object> get props => [brightness];
 }
