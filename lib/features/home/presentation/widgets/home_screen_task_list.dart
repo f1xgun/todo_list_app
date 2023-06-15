@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
-import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/home/presentation/widgets/home_screen_new_task_field.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/task_card.dart';
@@ -12,7 +11,6 @@ class HomeScreenTaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
-    logger.info(BlocProvider.of<ThemeBloc>(context).state.isDarkTheme);
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, state) {
       final tasks = !state.completedVisible
           ? state.tasks.where((task) => !task.isDone).toList()

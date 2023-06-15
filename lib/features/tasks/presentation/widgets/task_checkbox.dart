@@ -24,7 +24,8 @@ class _TaskCheckboxState extends State<TaskCheckbox> {
   @override
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
-    return GestureDetector(
+    return InkWell(
+      radius: 18,
       child: Container(
         decoration: BoxDecoration(
           color:

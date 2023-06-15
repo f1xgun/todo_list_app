@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/utils/logger.dart';
 
 class TaskDetailsScreenAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -23,7 +24,10 @@ class TaskDetailsScreenAppBar extends StatelessWidget
         width: 14,
         child: IconButton(
           splashRadius: 25,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+            logger.info('Close task details screen w/o saving task');
+          },
           icon: Icon(
             Icons.close,
             color: colors.colorLabelPrimary,
@@ -38,6 +42,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
               onPressed: () {
                 saveTask(context);
                 Navigator.pop(context);
+                logger.info('Close task details screen with saving task');
               },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 8),

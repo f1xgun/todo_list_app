@@ -22,7 +22,7 @@ class TaskCardViewInfoButton extends StatelessWidget {
           '/task_details',
           arguments: {'task': task, 'isNew': false},
         );
-        logger.info('Open task details page');
+        logger.info('Open task details page to edit task');
       },
     );
   }

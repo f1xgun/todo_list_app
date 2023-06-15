@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
-import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view.dart';
@@ -28,7 +27,6 @@ class _TaskCardState extends State<TaskCard> {
         setState(() {
           swipeSize = details.progress * size;
         });
-        logger.info(swipeSize);
       },
       confirmDismiss: (direction) async {
         switch (direction) {

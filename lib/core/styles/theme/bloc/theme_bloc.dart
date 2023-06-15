@@ -14,12 +14,15 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
           isDarkTheme: isDark,
           colorPalette: isDark ? darkPalette : lightPalette,
         )) {
-    on<ToggleThemeEvent>((event, emit) {
-      emit(
-        ThemeState(
-            isDarkTheme: !state.isDarkTheme,
-            colorPalette: state.isDarkTheme ? darkPalette : lightPalette),
-      );
-    });
+    on<ToggleThemeEvent>(_onToggleThemeEvent);
+  }
+
+  Future<void> _onToggleThemeEvent(
+      ToggleThemeEvent event, Emitter<ThemeState> emit) async {
+    emit(ThemeState(
+      isDarkTheme: event.brightness == Brightness.dark,
+      colorPalette:
+          event.brightness == Brightness.dark ? darkPalette : lightPalette,
+    ));
   }
 }

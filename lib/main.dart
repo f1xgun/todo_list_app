@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,8 +26,25 @@ void main() {
   }, ErrorHandler.recordError);
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  @override
+  void initState() {
+    super.initState();
+    final window = PlatformDispatcher.instance;
+
+    window.onPlatformBrightnessChanged = () {
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      final brightness = window.platformBrightness;
+      // TODO: add event to ThemeBloc
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +52,8 @@ class MainApp extends StatelessWidget {
       providers: [
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(
-            isDark: Theme.of(context).brightness == Brightness.dark,
+            isDark: PlatformDispatcher.instance.platformBrightness ==
+                Brightness.dark,
           ),
         ),
         BlocProvider<TasksBloc>(

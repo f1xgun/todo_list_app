@@ -1,6 +1,15 @@
 part of 'theme_bloc.dart';
 
 @immutable
-abstract class ThemeEvent {}
+abstract class ThemeEvent {
+  const ThemeEvent();
+}
 
-class ToggleThemeEvent extends ThemeEvent {}
+class ToggleThemeEvent extends ThemeEvent {
+  final Brightness brightness;
+
+  const ToggleThemeEvent({required this.brightness});
+
+  @override
+  List<Object> get props => [brightness];
+}
