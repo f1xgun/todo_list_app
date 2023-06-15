@@ -34,7 +34,7 @@ class MainApp extends StatelessWidget {
       providers: [
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(
-            isDark: Theme.of(context).brightness == Brightness.light,
+            isDark: Theme.of(context).brightness == Brightness.dark,
           ),
         ),
         BlocProvider<TasksBloc>(

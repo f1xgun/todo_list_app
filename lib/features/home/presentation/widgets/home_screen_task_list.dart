@@ -28,7 +28,7 @@ class HomeScreenTaskList extends StatelessWidget {
             itemBuilder: (context, index) {
               if (index == tasks.length) {
                 return Container(
-                  padding: const EdgeInsets.fromLTRB(52, 7, 14, 7),
+                  padding: const EdgeInsets.fromLTRB(47, 7, 14, 7),
                   child: const HomeScreenNewTaskField(),
                 );
               } else {
