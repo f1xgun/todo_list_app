@@ -10,8 +10,16 @@ class Task extends Equatable {
   final String id;
   final String text;
   final Importance importance;
+  @JsonKey(name: 'done')
   final bool isDone;
   final DateTime? deadline;
+  final String? color;
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'changed_at')
+  final DateTime? changedAt;
+  @JsonKey(name: 'last_updated_by')
+  final String? lastUpdatedBy;
 
   Task({
     required this.text,
@@ -19,11 +27,15 @@ class Task extends Equatable {
     this.importance = Importance.none,
     this.isDone = false,
     this.deadline,
+    this.color,
+    this.createdAt,
+    this.changedAt,
+    this.lastUpdatedBy,
   })  : id = id ?? const Uuid().v4(),
         super();
 
   @override
-  List<Object?> get props => [id, text, importance, isDone, deadline];
+  List<Object?> get props => [id, text, importance, isDone, deadline, color, createdAt, changedAt, lastUpdatedBy];
 
   Task copyWith({
     String? id,
