@@ -32,7 +32,14 @@ class HomeScreen extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/task_details',
-            arguments: {'task': Task(text: ''), 'isNew': true},
+            arguments: {
+              'task': Task(
+                text: '',
+                createdAt: DateTime.now(),
+                changedAt: DateTime.now(),
+              ),
+              'isNew': true
+            },
           );
           logger.info('Open task details page to create new task');
         },

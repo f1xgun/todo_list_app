@@ -12,22 +12,29 @@ import 'package:todo_list_app/core/utils/error_handler.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
+import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
+import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
-void main() {
-  runZonedGuarded(() {
+Future<void> main() async {
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final localStorage = LocalStorageTasksApi();
+    await localStorage.init();
     initLogger();
     logger.info('Start main');
 
     ErrorHandler.init();
     runApp(
-      const MainApp(),
+      MainApp(localStorage: localStorage),
     );
   }, ErrorHandler.recordError);
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({required this.localStorage, super.key});
+
+  final LocalStorageTasksApi localStorage;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +47,9 @@ class MainApp extends StatelessWidget {
           ),
         ),
         BlocProvider<TasksBloc>(
-          create: (context) => TasksBloc(),
+          create: (context) => TasksBloc(
+            tasksRepository: TasksRepository(localStorage: localStorage),
+          )..add(const LoadTasks()),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
