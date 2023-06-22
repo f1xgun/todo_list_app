@@ -8,22 +8,27 @@ part of 'task_model.dart';
 
 Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       text: json['text'] as String,
+      createdAt: const TimeStampConverter().fromJson(
+          json['created_at'] is String
+              ? int.parse(json['created_at'])
+              : json['created_at'] as int),
+      changedAt: const TimeStampConverter().fromJson(
+          json['changed_at'] is String
+              ? int.parse(json['changed_at'])
+              : json['changed_at'] as int),
       id: json['id'] as String?,
       importance:
           $enumDecodeNullable(_$ImportanceEnumMap, json['importance']) ??
               Importance.none,
-      isDone: json['done'] as bool? ?? false,
-      deadline: json['deadline'] == null
-          ? null
-          : DateTime.parse(json['deadline'] as String),
+      isDone: json['done'] is int
+          ? json['done'] == 1
+          : json['done'] as bool? ?? false,
+      deadline: const TimeStampOrNullConverter().fromJson(
+          json['deadline'] is String
+              ? int.tryParse(json['deadline'])
+              : json['deadline'] as int?),
       color: json['color'] as String?,
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      changedAt: json['changed_at'] == null
-          ? null
-          : DateTime.parse(json['changed_at'] as String),
-      lastUpdatedBy: json['last_updated_by'] as String?,
+      lastUpdatedBy: json['last_updated_by'] as String? ?? '1',
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -31,10 +36,10 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'text': instance.text,
       'importance': _$ImportanceEnumMap[instance.importance]!,
       'done': instance.isDone,
-      'deadline': instance.deadline?.toIso8601String(),
+      'deadline': const TimeStampOrNullConverter().toJson(instance.deadline),
       'color': instance.color,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'changed_at': instance.changedAt?.toIso8601String(),
+      'created_at': const TimeStampConverter().toJson(instance.createdAt),
+      'changed_at': const TimeStampConverter().toJson(instance.changedAt),
       'last_updated_by': instance.lastUpdatedBy,
     };
 
