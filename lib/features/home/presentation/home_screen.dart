@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list_app/core/constants/app_route_constants.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.pushNamed(
             context,
-            '/task_details',
+            AppRoutes.taskDetailRoute,
             arguments: {
               'task': Task(
                 text: '',

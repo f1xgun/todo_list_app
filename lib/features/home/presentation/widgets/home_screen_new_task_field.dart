@@ -15,12 +15,6 @@ class HomeScreenNewTaskField extends StatefulWidget {
 class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
   TextEditingController controller = TextEditingController();
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   void addNewTask(BuildContext context) {
     context.read<TasksBloc>().add(AddTask(
         task: Task(
@@ -45,5 +39,11 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
       controller: controller,
       onSubmitted: (value) => addNewTask(context),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

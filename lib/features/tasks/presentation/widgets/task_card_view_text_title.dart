@@ -21,8 +21,11 @@ class TaskCardViewTextTitle extends StatelessWidget {
         children: [
           if (task.importance != Importance.none && !task.isDone)
             WidgetSpan(
-              child: TaskCardViewImportanceIcon(
-                importance: task.importance,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 6.0),
+                child: TaskCardViewImportanceIcon(
+                  importance: task.importance,
+                ),
               ),
             ),
           TextSpan(
