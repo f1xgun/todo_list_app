@@ -25,6 +25,7 @@ class HomeScreenTaskList extends StatelessWidget {
             backgroundColor: colors.colorRed,
           ),
         );
+        return const SizedBox();
       } else {
         final completedTasks =
             state.tasks.where((task) => task.isDone).toList();
@@ -57,7 +58,6 @@ class HomeScreenTaskList extends StatelessWidget {
           ),
         );
       }
-      return const SizedBox();
     });
   }
 }
