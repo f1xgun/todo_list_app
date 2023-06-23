@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_list_app/core/constants/app_route_constants.dart';
+import 'package:todo_list_app/core/managers/network_manager.dart';
+import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/styles/app_style.dart';
 import 'package:todo_list_app/core/styles/palettes/dark_palette.dart';
 import 'package:todo_list_app/core/styles/palettes/light_palette.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
-import 'package:todo_list_app/core/utils/managers/network_manager.dart';
-import 'package:todo_list_app/core/utils/managers/persistence_manager.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
 import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
@@ -40,6 +40,7 @@ class MainApp extends StatelessWidget {
               persistenceManager: persistenceManager,
               networkManager: networkManager,
             ),
+            persistenceManager: persistenceManager,
           )..add(const LoadTasks()),
         ),
       ],

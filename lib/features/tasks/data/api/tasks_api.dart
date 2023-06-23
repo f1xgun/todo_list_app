@@ -6,4 +6,5 @@ abstract class TasksApi {
   Future<Task> addTask(Task task);
   Future<Task> updateTask(Task task);
   Future<void> deleteTask(String id);
+  Future<void> deleteTaskWithoutInternet(String id);
 }

@@ -9,7 +9,6 @@ class LocalStorageTasksApi implements TasksApi {
 
   Future<void> init() async {
     database = await DatabaseProvider.dbProvider.database;
-    // await PersistenceManager().saveTasksRevision(revision: 0);
   }
 
   Future<void> deleteAllTasks() async {
@@ -21,6 +20,13 @@ class LocalStorageTasksApi implements TasksApi {
     await database.insert('tasks', task.toJson());
     logger.info('Add task in localStorage: ${task.toJson()}');
     return task;
+  }
+
+  @override
+  Future<void> deleteTaskWithoutInternet(String id) async {
+    await database.update('tasks', {'deleted': 1},
+        where: 'id = ?', whereArgs: [id]);
+    logger.info('Wait for deleting task from server');
   }
 
   @override
@@ -46,8 +52,8 @@ class LocalStorageTasksApi implements TasksApi {
 
   @override
   Future<Task> updateTask(Task task) async {
-    final result = await database
-        .update('tasks', task.toJson(), where: 'id = ?', whereArgs: [task.id]);
+    final result = await database.update('tasks', task.toJson().toDBJson(),
+        where: 'id = ?', whereArgs: [task.id]);
     if (result == 0) {
       throw Exception('Task with id ${task.id} not found');
     }
