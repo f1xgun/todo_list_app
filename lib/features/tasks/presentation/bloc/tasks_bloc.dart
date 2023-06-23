@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
@@ -9,8 +10,11 @@ part 'tasks_event.dart';
 part 'tasks_state.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc({required TasksRepository tasksRepository})
+  TasksBloc(
+      {required TasksRepository tasksRepository,
+      required PersistenceManager persistenceManager})
       : _tasksRepository = tasksRepository,
+        _persistenceManager = persistenceManager,
         super(const TasksState()) {
     on<LoadTasks>(_onLoadTasks);
     on<AddTask>(_onAddTask);
@@ -20,11 +24,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   final TasksRepository _tasksRepository;
+  final PersistenceManager _persistenceManager;
 
   Future<void> _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     emit(state.copyWith(status: TasksStatus.loading));
     try {
-      final tasks = await _tasksRepository.getTasks();
+      final tasks = (await _tasksRepository.getTasks())
+          .where((task) => !(task.deleted ?? false))
+          .toList();
       emit(state.copyWith(tasks: tasks, status: TasksStatus.success));
       logger.info('Load tasks: ${tasks.length}');
     } on Exception catch (e) {
@@ -34,12 +41,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   Future<void> _onAddTask(AddTask event, Emitter<TasksState> emit) async {
-    final updatedTasks = [...state.tasks, event.task];
+    final deviceId = await _persistenceManager.getDeviceId();
+    final task = event.task.copyWith(lastUpdatedBy: deviceId);
+    final updatedTasks = [...state.tasks, task];
     emit(state.copyWith(tasks: updatedTasks));
     logger.info('AddTask in temp array');
     try {
-      await _tasksRepository.addTask(event.task);
-      logger.info('AddTask to storages: ${event.task}');
+      await _tasksRepository.addTask(task);
+      logger.info('AddTask to storages: $task');
     } on Exception catch (e) {
       logger.severe('AddTask: $e');
     }

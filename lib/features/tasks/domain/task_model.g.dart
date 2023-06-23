@@ -8,14 +8,8 @@ part of 'task_model.dart';
 
 Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       text: json['text'] as String,
-      createdAt: const TimeStampConverter().fromJson(
-          json['created_at'] is String
-              ? int.parse(json['created_at'])
-              : json['created_at'] as int),
-      changedAt: const TimeStampConverter().fromJson(
-          json['changed_at'] is String
-              ? int.parse(json['changed_at'])
-              : json['changed_at'] as int),
+      createdAt: const TimeStampConverter().fromJson(json['created_at'] as int),
+      changedAt: const TimeStampConverter().fromJson(json['changed_at'] as int),
       id: json['id'] as String?,
       importance:
           $enumDecodeNullable(_$ImportanceEnumMap, json['importance']) ??
@@ -23,12 +17,13 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       isDone: json['done'] is int
           ? json['done'] == 1
           : json['done'] as bool? ?? false,
-      deadline: const TimeStampOrNullConverter().fromJson(
-          json['deadline'] is String
-              ? int.tryParse(json['deadline'])
-              : json['deadline'] as int?),
+      deadline:
+          const TimeStampOrNullConverter().fromJson(json['deadline'] as int?),
       color: json['color'] as String?,
       lastUpdatedBy: json['last_updated_by'] as String? ?? '1',
+      deleted: json['deleted'] is int
+          ? json['deleted'] == 1
+          : json['deleted'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{

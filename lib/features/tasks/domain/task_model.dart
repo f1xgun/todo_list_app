@@ -5,6 +5,13 @@ import 'package:uuid/uuid.dart';
 
 part 'task_model.g.dart';
 
+extension TaskMapExtension on Map<String, dynamic> {
+  Map<String, dynamic> toDBJson() {
+    addEntries({'deleted': this['deleted'] ?? 0}.entries);
+    return this;
+  }
+}
+
 @JsonSerializable()
 class Task extends Equatable {
   final String id;
@@ -23,18 +30,21 @@ class Task extends Equatable {
   final DateTime changedAt;
   @JsonKey(name: 'last_updated_by')
   final String lastUpdatedBy;
+  @JsonKey(includeToJson: false)
+  final bool? deleted;
 
-  Task({
-    required this.text,
-    required this.createdAt,
-    required this.changedAt,
-    String? id,
-    this.importance = Importance.none,
-    this.isDone = false,
-    this.deadline,
-    this.color,
-    this.lastUpdatedBy = '1',
-  })  : id = id ?? const Uuid().v4(),
+  Task(
+      {required this.text,
+      required this.createdAt,
+      required this.changedAt,
+      String? id,
+      this.importance = Importance.none,
+      this.isDone = false,
+      this.deadline,
+      this.color,
+      this.lastUpdatedBy = 'example',
+      this.deleted = false})
+      : id = id ?? const Uuid().v4(),
         super();
 
   @override
@@ -47,29 +57,34 @@ class Task extends Equatable {
         color,
         createdAt,
         changedAt,
-        lastUpdatedBy
+        lastUpdatedBy,
+        deleted
       ];
 
-  Task copyWith({
-    String? id,
-    String? text,
-    Importance? importance,
-    bool? isDone,
-    DateTime? deadline,
-    bool? deleteDeadline,
-    String? color,
-    DateTime? createdAt,
-    DateTime? changedAt,
-  }) {
+  Task copyWith(
+      {String? id,
+      String? text,
+      Importance? importance,
+      bool? isDone,
+      DateTime? deadline,
+      bool? deleteDeadline,
+      String? color,
+      DateTime? createdAt,
+      DateTime? changedAt,
+      bool? deleted,
+      String? lastUpdatedBy}) {
     return Task(
-        id: id ?? this.id,
-        text: text ?? this.text,
-        importance: importance ?? this.importance,
-        isDone: isDone ?? this.isDone,
-        deadline: deleteDeadline ?? false ? null : deadline ?? this.deadline,
-        color: color ?? this.color,
-        createdAt: createdAt ?? this.createdAt,
-        changedAt: changedAt ?? this.changedAt);
+      id: id ?? this.id,
+      text: text ?? this.text,
+      importance: importance ?? this.importance,
+      isDone: isDone ?? this.isDone,
+      deadline: deleteDeadline ?? false ? null : deadline ?? this.deadline,
+      color: color ?? this.color,
+      createdAt: createdAt ?? this.createdAt,
+      changedAt: changedAt ?? this.changedAt,
+      deleted: deleted ?? this.deleted,
+      lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy
+    );
   }
 
   static Task fromJson(Map<String, dynamic> json) {

@@ -6,15 +6,15 @@ class DatabaseProvider {
   static Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await createDatabase();
+    _database = await _createDatabase();
     return _database!;
   }
 
-  Future<Database> createDatabase() async {
+  Future<Database> _createDatabase() async {
     final documentsDirectory = await getApplicationDocumentsDirectory();
     final path = '${documentsDirectory.path}/todo_app.db';
     final database = await openDatabase(path,
-        version: 2, onCreate: initDB, onUpgrade: onUpgrade);
+        version: 2, onCreate: _initDB, onUpgrade: onUpgrade);
     return database;
   }
 
@@ -22,7 +22,7 @@ class DatabaseProvider {
     if (newVersion > oldVersion) {}
   }
 
-  Future<void> initDB(Database database, int version) async {
+  Future<void> _initDB(Database database, int version) async {
     await database.execute('CREATE TABLE importanceType ( '
         'id   INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
         'type VARCHAR(10) '
@@ -37,7 +37,8 @@ class DatabaseProvider {
         'color            TEXT, '
         'created_at       INTEGER, '
         'changed_at       INTEGER, '
-        'last_updated_by  TEXT '
+        'last_updated_by  TEXT, '
+        'deleted          INTEGER '
         ')');
   }
 }

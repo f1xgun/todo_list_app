@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-
-import 'package:todo_list_app/core/utils/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/error/exceptions.dart';
+import 'package:todo_list_app/core/managers/persistence_manager.dart';
 
 class NetworkManager {
   static const url = 'https://beta.mrdekk.ru/todobackend';
@@ -12,6 +12,9 @@ class NetworkManager {
   Dio? _dio;
 
   final PersistenceManager _persistenceManager;
+
+  NetworkManager({required persistenceManager})
+      : _persistenceManager = persistenceManager;
 
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
@@ -33,9 +36,6 @@ class NetworkManager {
       );
     return _dio!;
   }
-
-  NetworkManager({required persistenceManager})
-      : _persistenceManager = persistenceManager;
 
   Future<Response> get(String path) async {
     return _request(() => dioInstance.get(path));
@@ -83,31 +83,4 @@ class NetworkManager {
       throw UnknownNetworkException();
     }
   }
-}
-
-class NoInternetException implements Exception {
-  final String message;
-
-  NoInternetException({this.message = 'No internet connection'});
-
-  @override
-  String toString() => 'NoInternetException: $message';
-}
-
-class ResponseException implements Exception {
-  final String message;
-
-  ResponseException(this.message);
-
-  @override
-  String toString() => 'ResponseException: $message';
-}
-
-class UnknownNetworkException implements Exception {
-  final String message;
-
-  UnknownNetworkException({this.message = 'Unknown network error'});
-
-  @override
-  String toString() => 'UnknownNetworkException: $message';
 }
