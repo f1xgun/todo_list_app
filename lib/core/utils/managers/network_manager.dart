@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/core/utils/managers/persistence_manager.dart';
 
 class NetworkManager {
@@ -21,7 +20,6 @@ class NetworkManager {
           'Accept': 'application/json',
           'Authorization': 'Bearer balladwise'
         }))
-      ..interceptors.add(ErrorInterceptor())
       ..interceptors.add(
         InterceptorsWrapper(
           onRequest: (options, handler) async {
@@ -37,99 +35,76 @@ class NetworkManager {
   NetworkManager();
 
   Future<Response> get(String path) async {
-    try {
-      final response = await dioInstance.get(path);
-      return response;
-    } on Exception catch (_) {
-      return Response(
-        statusCode: 500,
-        statusMessage: 'Server error',
-        requestOptions: RequestOptions(),
-      );
-    }
-    // final response = await dioInstance.get(path).timeout(
-    //       const Duration(seconds: timeoutTime),
-    //     );
-    // return response;
+    return _request(() => dioInstance.get(path));
   }
 
   Future<Response> post(String path, Map<String, dynamic> data) async {
-    try {
-      final response = await dioInstance.post(path, data: data);
-      return response;
-    } on Exception catch (_) {
-      return Response(
-        statusCode: 500,
-        statusMessage: 'Server error',
-        requestOptions: RequestOptions(),
-      );
-    }
-    final response = await dioInstance.post(path, data: data).timeout(
-          const Duration(seconds: timeoutTime),
-        );
-    return response;
+    return _request(() => dioInstance.post(path, data: data));
   }
 
   Future<Response> delete(String path) async {
-    final response = await dioInstance.delete(path).timeout(
-          const Duration(seconds: timeoutTime),
-        );
-    return response;
+    return _request(() => dioInstance.delete(path));
   }
 
   Future<Response> put(String path, Map<String, dynamic> data) async {
-    try {
-      final response = await dioInstance.put(path, data: data);
-      return response;
-    } on Exception catch (_) {
-      return Response(
-        statusCode: 500,
-        statusMessage: 'Server error',
-        requestOptions: RequestOptions(),
-      );
-    }
-    final response = await dioInstance.put(path, data: data).timeout(
-          const Duration(seconds: timeoutTime),
-        );
-    return response;
+    return _request<Response>(() => dioInstance.put(path, data: data));
   }
 
   Future<Response> patch(String path, Map<String, dynamic> data) async {
+    return _request<Response>(() => dioInstance.patch(path, data: data));
+  }
+
+  Future<T> _request<T>(Future<T> Function() requestFunc) async {
     try {
-      final response = await dioInstance.patch(path, data: data);
-      return response;
-    } on Exception catch (_) {
-      return Response(
-        statusCode: 500,
-        statusMessage: 'Server error',
-        requestOptions: RequestOptions(),
-      );
+      return await requestFunc();
+    } on DioException catch (dioException) {
+      switch (dioException.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.cancel:
+        case DioExceptionType.connectionError:
+          throw NoInternetException();
+        case DioExceptionType.badResponse:
+          throw ResponseException('Bad response');
+        default:
+          if (dioException.error is SocketException) {
+            throw NoInternetException();
+          } else {
+            throw UnknownNetworkException();
+          }
+      }
+    } on SocketException catch (_) {
+      throw NoInternetException();
+    } on Object catch (_) {
+      throw UnknownNetworkException();
     }
-    final response = await dioInstance.patch(path, data: data).timeout(
-          const Duration(seconds: timeoutTime),
-        );
-    return response;
   }
 }
 
-class ErrorInterceptor extends Interceptor {
+class NoInternetException implements Exception {
+  final String message;
+
+  NoInternetException({this.message = 'No internet connection'});
+
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (err.error is SocketException) {
-      final socketException = err.error as SocketException;
-      logger.info('Request error: ${socketException.message}');
-      throw Exception(err.message);
-    } else if (err.error is DioException) {
-      final dioError = err.error as DioException;
-      logger.info('Request error: $dioError');
-      throw Exception('${dioError.message}');
-    } else if (err.error is TimeoutException) {
-      final timeoutException = err.error as TimeoutException;
-      logger.info('Request error: ${timeoutException.message}');
-      throw Exception('${timeoutException.message}');
-    } else {
-      logger.info('Request error: ${err.error}');
-      throw Exception('${err.error}');
-    }
-  }
+  String toString() => 'NoInternetException: $message';
+}
+
+class ResponseException implements Exception {
+  final String message;
+
+  ResponseException(this.message);
+
+  @override
+  String toString() => 'ResponseException: $message';
+}
+
+class UnknownNetworkException implements Exception {
+  final String message;
+
+  UnknownNetworkException({this.message = 'Unknown network error'});
+
+  @override
+  String toString() => 'UnknownNetworkException: $message';
 }
