@@ -29,7 +29,7 @@ class TaskCheckbox extends StatelessWidget {
         ),
         height: 18,
         width: 18,
-        margin: const EdgeInsets.only(right: 15),
+        // margin: const EdgeInsets.only(right: 15),
         child: Checkbox(
           value: value,
           activeColor: colors.colorGreen,

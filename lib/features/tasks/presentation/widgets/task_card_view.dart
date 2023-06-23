@@ -14,18 +14,21 @@ class TaskCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [
-          TaskCheckbox(
-            task: task,
-            value: task.isDone,
-            onChanged: (value) {
-              context
-                  .read<TasksBloc>()
-                  .add(UpdateTask(task: task.copyWith(isDone: !task.isDone)));
-              logger.info('${task.isDone ? 'Undone' : 'Done'} task');
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: TaskCheckbox(
+              task: task,
+              value: task.isDone,
+              onChanged: (value) {
+                context
+                    .read<TasksBloc>()
+                    .add(UpdateTask(task: task.copyWith(isDone: !task.isDone)));
+                logger.info('${task.isDone ? 'Undone' : 'Done'} task');
+              },
+            ),
           ),
           Expanded(child: TaskCardViewText(task: task)),
           Padding(
