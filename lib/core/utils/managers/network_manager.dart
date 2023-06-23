@@ -11,6 +11,8 @@ class NetworkManager {
 
   Dio? _dio;
 
+  final PersistenceManager _persistenceManager;
+
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
         baseUrl: url,
@@ -24,7 +26,7 @@ class NetworkManager {
         InterceptorsWrapper(
           onRequest: (options, handler) async {
             options.headers['X-Last-Known-Revision'] =
-                await PersistenceManager().getTasksRevision();
+                await _persistenceManager.getTasksRevision();
             handler.next(options);
           },
         ),
@@ -32,7 +34,8 @@ class NetworkManager {
     return _dio!;
   }
 
-  NetworkManager();
+  NetworkManager({required persistenceManager})
+      : _persistenceManager = persistenceManager;
 
   Future<Response> get(String path) async {
     return _request(() => dioInstance.get(path));

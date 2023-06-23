@@ -22,7 +22,11 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
   }
 
   void addNewTask(BuildContext context) {
-    context.read<TasksBloc>().add(AddTask(task: Task(text: controller.text, createdAt: DateTime.now(), changedAt: DateTime.now())));
+    context.read<TasksBloc>().add(AddTask(
+        task: Task(
+            text: controller.text,
+            createdAt: DateTime.now(),
+            changedAt: DateTime.now())));
     controller.text = '';
   }
 

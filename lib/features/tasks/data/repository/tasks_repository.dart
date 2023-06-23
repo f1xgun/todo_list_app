@@ -6,11 +6,17 @@ import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
 class TasksRepository {
   TasksRepository({
+    required networkManager,
+    required persistenceManager,
     required this.localStorage,
-  });
+  }) : _persistenceManager = persistenceManager {
+    networkStorage = NetworkStorageTasksApi(
+        persistenceManager: persistenceManager, networkManager: networkManager);
+  }
 
+  final PersistenceManager _persistenceManager;
   final TasksApi localStorage;
-  final NetworkStorageTasksApi networkStorage = NetworkStorageTasksApi();
+  late final NetworkStorageTasksApi networkStorage;
 
   Future<bool> checkChanges() async {
     final networkStorageTasks = (await networkStorage.getTasks()).data ?? [];
@@ -21,7 +27,10 @@ class TasksRepository {
 
   Future<void> syncStorages() async {
     final networkRevision = (await networkStorage.getTasks()).revision;
-    if (await PersistenceManager().getTasksRevision() != networkRevision || await checkChanges()) {
+    if (await _persistenceManager.getTasksRevision() != networkRevision ||
+        await checkChanges()) {
+      await _persistenceManager.saveTasksRevision(
+          revision: networkRevision ?? 0);
       final localTasks = await getLocalTasks();
       final syncTasksList = (await networkStorage.syncTasks(localTasks)).data;
       if (syncTasksList != null) {
@@ -61,7 +70,7 @@ class TasksRepository {
   Future<Task> addTask(Task task) async {
     final localTask = await localStorage.addTask(task);
     final ResponseData response = await networkStorage.addTask(task);
-    if (response.revision != await PersistenceManager().getTasksRevision()) {
+    if (response.revision != await _persistenceManager.getTasksRevision()) {
       await syncStorages();
       await networkStorage.addTask(task);
     }
@@ -71,7 +80,7 @@ class TasksRepository {
   Future<Task> updateTask(Task task) async {
     final localTask = await localStorage.updateTask(task);
     final ResponseData response = await networkStorage.updateTask(task);
-    if (response.revision != await PersistenceManager().getTasksRevision()) {
+    if (response.revision != await _persistenceManager.getTasksRevision()) {
       await syncStorages();
       await networkStorage.updateTask(task);
     }
@@ -81,7 +90,7 @@ class TasksRepository {
   Future<void> deleteTask(String id) async {
     await localStorage.deleteTask(id);
     final ResponseData response = await networkStorage.deleteTask(id);
-    if (response.revision != await PersistenceManager().getTasksRevision()) {
+    if (response.revision != await _persistenceManager.getTasksRevision()) {
       await syncStorages();
       await networkStorage.deleteTask(id);
     }

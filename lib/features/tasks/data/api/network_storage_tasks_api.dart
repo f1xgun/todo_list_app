@@ -5,19 +5,24 @@ import 'package:todo_list_app/features/tasks/domain/response_data.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
 class NetworkStorageTasksApi {
-  NetworkStorageTasksApi();
+  final NetworkManager _networkManager;
+  final PersistenceManager _persistenceManager;
+
+  NetworkStorageTasksApi({required networkManager, required persistenceManager})
+      : _networkManager = networkManager,
+        _persistenceManager = persistenceManager;
 
   Future<ResponseData<Task>> addTask(Task task) async {
     final requestData = <String, dynamic>{'element': task.toJson()};
     try {
-      final response = await NetworkManager().post('/list', requestData);
+      final response = await _networkManager.post('/list', requestData);
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
         logger.info('Add task to network storage: ${task.toJson()}');
         final data = Task.fromJson(json['element']);
 
         final revision = json['revision'] as int;
-        await PersistenceManager().saveTasksRevision(revision: revision);
+        await _persistenceManager.saveTasksRevision(revision: revision);
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
@@ -38,14 +43,14 @@ class NetworkStorageTasksApi {
 
   Future<ResponseData<Task>> deleteTask(String id) async {
     try {
-      final response = await NetworkManager().delete('/list/$id');
+      final response = await _networkManager.delete('/list/$id');
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
         logger.info(
             'Delete task from network storage: $id, ${response.statusMessage}');
         final data = Task.fromJson(json['element']);
         final revision = json['revision'] as int;
-        await PersistenceManager().saveTasksRevision(revision: revision);
+        await _persistenceManager.saveTasksRevision(revision: revision);
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
@@ -66,7 +71,7 @@ class NetworkStorageTasksApi {
 
   Future<ResponseData<Task>> getTask(String id) async {
     try {
-      final response = await NetworkManager().get('/list/$id');
+      final response = await _networkManager.get('/list/$id');
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
         logger.info(
@@ -74,7 +79,7 @@ class NetworkStorageTasksApi {
         final data = Task.fromJson(json['element']);
 
         final revision = json['revision'] as int;
-        await PersistenceManager().saveTasksRevision(revision: revision);
+        await _persistenceManager.saveTasksRevision(revision: revision);
 
         return ResponseData(response.statusCode!, data, revision);
       }
@@ -96,7 +101,7 @@ class NetworkStorageTasksApi {
 
   Future<ResponseData<List<Task>>> getTasks() async {
     try {
-      final response = await NetworkManager().get('/list');
+      final response = await _networkManager.get('/list');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
@@ -131,7 +136,7 @@ class NetworkStorageTasksApi {
     final requestData = {'element': task.toJson()};
     try {
       final response =
-          await NetworkManager().put('/list/${task.id}', requestData);
+          await _networkManager.put('/list/${task.id}', requestData);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
@@ -140,7 +145,7 @@ class NetworkStorageTasksApi {
         final data = Task.fromJson(json['element']);
 
         final revision = json['revision'] as int;
-        await PersistenceManager().saveTasksRevision(revision: revision);
+        await _persistenceManager.saveTasksRevision(revision: revision);
 
         return ResponseData(response.statusCode!, data, revision);
       }
@@ -165,7 +170,7 @@ class NetworkStorageTasksApi {
       'list': tasks.map((task) => task.toJson()).toList(),
     };
     try {
-      final response = await NetworkManager().patch('/list', requestData);
+      final response = await _networkManager.patch('/list', requestData);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
@@ -177,7 +182,7 @@ class NetworkStorageTasksApi {
             .toList();
 
         final revision = json['revision'] as int;
-        await PersistenceManager().saveTasksRevision(revision: revision);
+        await _persistenceManager.saveTasksRevision(revision: revision);
 
         return ResponseData(response.statusCode!, data, revision);
       }

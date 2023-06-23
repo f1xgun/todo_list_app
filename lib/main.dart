@@ -10,6 +10,8 @@ import 'package:todo_list_app/core/styles/palettes/light_palette.dart';
 import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/core/utils/error_handler.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
+import 'package:todo_list_app/core/utils/managers/network_manager.dart';
+import 'package:todo_list_app/core/utils/managers/persistence_manager.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
 import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
@@ -38,6 +40,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final persistenceManager = PersistenceManager();
+    final networkManager =
+        NetworkManager(persistenceManager: persistenceManager);
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeBloc>(
@@ -48,7 +53,11 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider<TasksBloc>(
           create: (context) => TasksBloc(
-            tasksRepository: TasksRepository(localStorage: localStorage),
+            tasksRepository: TasksRepository(
+              localStorage: localStorage,
+              persistenceManager: persistenceManager,
+              networkManager: networkManager,
+            ),
           )..add(const LoadTasks()),
         ),
       ],

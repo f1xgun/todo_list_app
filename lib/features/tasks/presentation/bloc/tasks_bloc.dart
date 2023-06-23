@@ -65,11 +65,8 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       for (final t in state.tasks)
         if (t.id != event.task.id) t else null
     ];
-    emit(
-      state.copyWith(
-        tasks: updatedTasks.where((t) => t != null).cast<Task>().toList(),
-      ),
-    );
+    emit(state.copyWith(
+        tasks: updatedTasks.where((t) => t != null).cast<Task>().toList()));
     logger.info('Delete task from temp array');
     try {
       await _tasksRepository.deleteTask(event.task.id);
