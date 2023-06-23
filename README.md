@@ -1,6 +1,6 @@
 # TODO List App
 
-Todo List App - приложение для создания и выполнения задач.
+Todo List App - приложение для создания и выполнения задач. [Скачать APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.1.0/app-release.apk)
 
 ## Скриншоты
 <img src="https://github.com/f1xgun/todo_list_app/assets/88651829/2ac4aa3a-1f37-4f2c-8325-c572f766cf19" width="300">
