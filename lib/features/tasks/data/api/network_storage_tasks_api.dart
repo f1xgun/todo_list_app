@@ -21,6 +21,15 @@ class NetworkStorageTasksApi {
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Add task to network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Add task to network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Add task to network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
       logger.info('Add task to network storage error: $e');
       return ResponseData.error(500);
@@ -40,6 +49,15 @@ class NetworkStorageTasksApi {
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Delete task from network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Delete task from network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Delete task from network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
       logger.info('Delete task from network storage error: $e');
       return ResponseData.error(500);
@@ -61,6 +79,15 @@ class NetworkStorageTasksApi {
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Get task from network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Get task from network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Get task from network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
       logger.info('Get task from network storage error: $e');
       return ResponseData.error(500);
@@ -81,11 +108,19 @@ class NetworkStorageTasksApi {
             .toList();
 
         final revision = json['revision'] as int;
-        // await PersistenceManager().saveTasksRevision(revision: revision);
 
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Get tasks from network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Get tasks from network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Get tasks from network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
       logger.info('Get tasks from network storage error: $e');
       return ResponseData.error(500);
@@ -110,6 +145,15 @@ class NetworkStorageTasksApi {
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Update task in network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Update task in network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Update task in network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
       logger.info('Update task in network storage error: $e');
       return ResponseData.error(500);
@@ -138,9 +182,17 @@ class NetworkStorageTasksApi {
         return ResponseData(response.statusCode!, data, revision);
       }
       return ResponseData.error(response.statusCode!);
+    } on NoInternetException catch (e) {
+      logger.info('Sync tasks from network storage error: $e');
+      return ResponseData.error(503);
+    } on ResponseException catch (e) {
+      logger.info('Sync tasks from network storage error: $e');
+      return ResponseData.error(500);
+    } on UnknownNetworkException catch (e) {
+      logger.info('Sync tasks from network storage error: $e');
+      return ResponseData.error(500);
     } on Exception catch (e) {
-      logger
-          .info('Sync tasks from network storage and local storage error: $e');
+      logger.info('Sync tasks from network storage error: $e');
       return ResponseData.error(500);
     }
   }
