@@ -46,7 +46,8 @@ class LocalStorageTasksApi implements TasksApi {
   @override
   Future<List<Task>> getTasks() async {
     final result = await database.query('tasks');
-    logger.info('Get tasks from localStorage length: ${result.length}');
+    logger.info(
+        'Get tasks from localStorage length: ${result.map(Task.fromJson).toList()}');
     return result.map(Task.fromJson).toList();
   }
 

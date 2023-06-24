@@ -108,12 +108,12 @@ class NetworkStorageTasksApi {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = response.data;
-        logger.info(
-            'Get tasks from network storage: length ${(json['list'] as List<dynamic>).length} ${response.statusMessage}');
         final listJson = json['list'] as List<dynamic>;
         final data = listJson
             .map((e) => Task.fromJson(e as Map<String, dynamic>))
             .toList();
+        logger.info(
+            'Get tasks from network storage: $data ${response.statusMessage}');
 
         final revision = json['revision'] as int;
 
