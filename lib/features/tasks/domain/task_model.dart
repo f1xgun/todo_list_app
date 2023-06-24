@@ -17,6 +17,7 @@ class Task extends Equatable {
   final String id;
   final String text;
   final Importance importance;
+  @BoolOrIntToBoolConverter()
   @JsonKey(name: 'done')
   final bool isDone;
   @TimeStampOrNullConverter()
@@ -30,6 +31,7 @@ class Task extends Equatable {
   final DateTime changedAt;
   @JsonKey(name: 'last_updated_by')
   final String lastUpdatedBy;
+  @BoolOrIntToBoolConverter()
   @JsonKey(includeToJson: false)
   final bool? deleted;
 
@@ -74,17 +76,16 @@ class Task extends Equatable {
       bool? deleted,
       String? lastUpdatedBy}) {
     return Task(
-      id: id ?? this.id,
-      text: text ?? this.text,
-      importance: importance ?? this.importance,
-      isDone: isDone ?? this.isDone,
-      deadline: deleteDeadline ?? false ? null : deadline ?? this.deadline,
-      color: color ?? this.color,
-      createdAt: createdAt ?? this.createdAt,
-      changedAt: changedAt ?? this.changedAt,
-      deleted: deleted ?? this.deleted,
-      lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy
-    );
+        id: id ?? this.id,
+        text: text ?? this.text,
+        importance: importance ?? this.importance,
+        isDone: isDone ?? this.isDone,
+        deadline: deleteDeadline ?? false ? null : deadline ?? this.deadline,
+        color: color ?? this.color,
+        createdAt: createdAt ?? this.createdAt,
+        changedAt: changedAt ?? this.changedAt,
+        deleted: deleted ?? this.deleted,
+        lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy);
   }
 
   static Task fromJson(Map<String, dynamic> json) {
@@ -130,5 +131,17 @@ class TimeStampOrNullConverter implements JsonConverter<DateTime?, int?> {
   @override
   int? toJson(DateTime? date) {
     return date?.millisecondsSinceEpoch;
+  }
+}
+
+class BoolOrIntToBoolConverter implements JsonConverter<bool?, dynamic> {
+  const BoolOrIntToBoolConverter();
+
+  @override
+  bool? fromJson(json) => json is int ? json == 1 : json;
+
+  @override
+  bool? toJson(bool? object) {
+    return object;
   }
 }
