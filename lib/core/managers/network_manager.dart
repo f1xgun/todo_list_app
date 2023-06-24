@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:todo_list_app/core/env/env.dart';
 import 'package:todo_list_app/core/error/exceptions.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 
 class NetworkManager {
-  static const url = 'https://beta.mrdekk.ru/todobackend';
   static const timeoutTime = 5;
 
   Dio? _dio;
@@ -18,12 +18,12 @@ class NetworkManager {
 
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
-        baseUrl: url,
+        baseUrl: Env.tasksHost,
         connectTimeout: const Duration(seconds: timeoutTime),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer balladwise'
+          'Authorization': Env.token
         }))
       ..interceptors.add(
         InterceptorsWrapper(

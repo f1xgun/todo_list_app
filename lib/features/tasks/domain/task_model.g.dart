@@ -20,7 +20,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       deadline:
           const TimeStampOrNullConverter().fromJson(json['deadline'] as int?),
       color: json['color'] as String?,
-      lastUpdatedBy: json['last_updated_by'] as String? ?? '1',
+      lastUpdatedBy: json['last_updated_by'] as String? ?? 'example',
       deleted: json['deleted'] is int
           ? json['deleted'] == 1
           : json['deleted'] as bool? ?? false,
