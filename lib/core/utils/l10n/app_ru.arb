@@ -9,5 +9,6 @@
   "importanceHighPriority": "!! Высокий",
   "deadlineTitle": "Сделать до",
   "delete": "Удалить",
-  "save": "сохранить"
+  "save": "сохранить",
+  "loadTasksError": "Ошибка загрузки задач"
 }

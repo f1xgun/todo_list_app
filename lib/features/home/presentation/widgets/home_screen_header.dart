@@ -9,7 +9,6 @@ import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
   const HomeScreenHeaderDelegate();
 
-  double get expandedHeight => 200;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -54,23 +53,16 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                           Padding(
                             padding:
                                 EdgeInsets.only(top: 6 * percentOfShrinkOffset),
-                            child: BlocBuilder<TasksBloc, TasksState>(
-                              builder: (context, state) {
-                                return Text(
-                                  AppLocalizations.of(context)!
-                                      .tasksCompletedCount(
-                                    BlocProvider.of<TasksBloc>(context)
-                                        .state
-                                        .tasks
-                                        .where((element) => element.isDone)
-                                        .length,
-                                  ),
-                                  style: text.bodyMedium?.copyWith(
-                                    color: themeData.hintColor,
-                                    fontSize: 16 * percentOfShrinkOffset,
-                                  ),
-                                );
-                              },
+                            child: Text(
+                              AppLocalizations.of(context)!.tasksCompletedCount(
+                                state.tasks
+                                    .where((element) => element.isDone)
+                                    .length,
+                              ),
+                              style: text.bodyMedium?.copyWith(
+                                color: themeData.hintColor,
+                                fontSize: 16 * percentOfShrinkOffset,
+                              ),
                             ),
                           ),
                       ],
@@ -82,9 +74,7 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(
-                          BlocProvider.of<TasksBloc>(context)
-                                  .state
-                                  .completedVisible
+                          state.completedVisible
                               ? Icons.visibility_off
                               : Icons.visibility,
                           size: 24,
@@ -106,6 +96,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
       },
     );
   }
+
+  double get expandedHeight => 200;
 
   @override
   double get maxExtent => expandedHeight;

@@ -9,5 +9,6 @@
   "importanceHighPriority": "!! High",
   "deadlineTitle": "Due date",
   "delete": "Delete",
-  "save": "save"
+  "save": "save",
+  "loadTasksError": "Error loading tasks"
 }

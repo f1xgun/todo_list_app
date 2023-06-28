@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/home/presentation/widgets/home_screen_new_task_field.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
@@ -21,7 +22,7 @@ class HomeScreenTaskList extends StatelessWidget {
       } else if (state.status == TasksStatus.failure) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Ошибка загрузки задач'),
+            content: Text(AppLocalizations.of(context)!.loadTasksError),
             backgroundColor: colors.colorRed,
           ),
         );
