@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view.dart';
@@ -18,7 +18,7 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final colors = AppTheme.of(context).colors;
     final size = MediaQuery.of(context).size.width - 16;
     return Dismissible(
       key: ValueKey(widget.task.id),

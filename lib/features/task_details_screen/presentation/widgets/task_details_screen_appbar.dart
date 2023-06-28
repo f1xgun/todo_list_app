@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 
 class TaskDetailsScreenAppBar extends StatelessWidget
@@ -14,7 +13,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     final tempData = Theme.of(context);
     final text = tempData.textTheme;
-    final colors = context.read<ThemeBloc>().state.colorPalette;
+    final colors = AppTheme.of(context).colors;
     return AppBar(
       backgroundColor: colors.colorBackPrimary,
       scrolledUnderElevation: 4,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
@@ -18,7 +17,7 @@ class TaskCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final colors = AppTheme.of(context).colors;
     return InkWell(
       radius: 18,
       child: Container(

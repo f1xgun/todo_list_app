@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 
 class TaskCardViewImportanceIcon extends StatelessWidget {
@@ -14,7 +13,7 @@ class TaskCardViewImportanceIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.read<ThemeBloc>().state.colorPalette;
+    final colors = AppTheme.of(context).colors;
 
     return switch (importance) {
       Importance.lowPriority => SvgPicture.asset(

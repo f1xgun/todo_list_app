@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -17,9 +17,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
     final text = themeData.textTheme;
     final diff = expandedHeight - kToolbarHeight;
     final k = (diff - shrinkOffset) / diff;
-    // ignore: omit_local_variable_types
     final double percentOfShrinkOffset = max(k, 0);
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final colors = AppTheme.of(context).colors;
 
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
