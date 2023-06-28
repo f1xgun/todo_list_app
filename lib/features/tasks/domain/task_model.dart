@@ -109,12 +109,12 @@ class TimeStampConverter implements JsonConverter<DateTime, int> {
 
   @override
   DateTime fromJson(int timestamp) {
-    return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   }
 
   @override
   int toJson(DateTime date) {
-    return date.millisecondsSinceEpoch;
+    return date.millisecondsSinceEpoch ~/ 1000;
   }
 }
 
@@ -125,12 +125,12 @@ class TimeStampOrNullConverter implements JsonConverter<DateTime?, int?> {
   DateTime? fromJson(int? timestamp) {
     return timestamp == null
         ? null
-        : DateTime.fromMillisecondsSinceEpoch(timestamp);
+        : DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   }
 
   @override
   int? toJson(DateTime? date) {
-    return date?.millisecondsSinceEpoch;
+    return (date?.millisecondsSinceEpoch ?? 0) ~/ 1000;
   }
 }
 
