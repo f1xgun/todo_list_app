@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.6
+  get_it: ^7.6.0
   intl: any
   json_annotation: ^4.8.1
   logging: ^1.2.0

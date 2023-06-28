@@ -2,28 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_list_app/core/constants/app_route_constants.dart';
-import 'package:todo_list_app/core/managers/network_manager.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/styles/app_style.dart';
 import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/core/styles/palettes/dark_palette.dart';
 import 'package:todo_list_app/core/styles/palettes/light_palette.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
-import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
-import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class MainApp extends StatelessWidget {
-  const MainApp({required this.localStorage, super.key});
-
-  final LocalStorageTasksApi localStorage;
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final persistenceManager = PersistenceManager();
-    final networkManager =
-        NetworkManager(persistenceManager: persistenceManager);
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDarkTheme = brightness == Brightness.dark;
 
@@ -32,14 +23,7 @@ class MainApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<TasksBloc>(
-            create: (context) => TasksBloc(
-              tasksRepository: TasksRepository(
-                localStorage: localStorage,
-                persistenceManager: persistenceManager,
-                networkManager: networkManager,
-              ),
-              persistenceManager: persistenceManager,
-            )..add(const LoadTasks()),
+            create: (context) => TasksBloc()..add(const LoadTasks()),
           ),
         ],
         child: MaterialApp(

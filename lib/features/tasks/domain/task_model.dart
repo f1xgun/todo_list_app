@@ -130,7 +130,7 @@ class TimeStampOrNullConverter implements JsonConverter<DateTime?, int?> {
 
   @override
   int? toJson(DateTime? date) {
-    return (date?.millisecondsSinceEpoch ?? 0) ~/ 1000;
+    return date == null ? null : date.millisecondsSinceEpoch ~/ 1000;
   }
 }
 

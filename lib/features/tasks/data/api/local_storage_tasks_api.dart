@@ -7,6 +7,8 @@ import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 class LocalStorageTasksApi implements TasksApi {
   late final Database database;
 
+  // const LocalStorageTasksApi();
+
   Future<void> init() async {
     database = await DatabaseProvider.dbProvider.database;
   }

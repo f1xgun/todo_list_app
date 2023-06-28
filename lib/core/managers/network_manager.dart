@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/env/env.dart';
 import 'package:todo_list_app/core/error/exceptions.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
@@ -13,8 +14,7 @@ class NetworkManager {
 
   final PersistenceManager _persistenceManager;
 
-  NetworkManager({required persistenceManager})
-      : _persistenceManager = persistenceManager;
+  NetworkManager() : _persistenceManager = GetIt.I<PersistenceManager>();
 
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
