@@ -2,12 +2,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:todo_list_app/core/utils/db.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/api/tasks_api.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class LocalStorageTasksApi implements TasksApi {
   late final Database database;
 
-  // const LocalStorageTasksApi();
+  LocalStorageTasksApi();
 
   Future<void> init() async {
     database = await DatabaseProvider.dbProvider.database;

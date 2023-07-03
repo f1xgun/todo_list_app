@@ -19,7 +19,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
           const TimeStampOrNullConverter().fromJson(json['deadline'] as int?),
       color: json['color'] as String?,
       lastUpdatedBy: json['last_updated_by'] as String? ?? 'example',
-      deleted: const BoolOrIntToBoolConverter().fromJson(json['deleted']),
+      deleted: json['deleted'] == null
+          ? false
+          : const BoolOrIntToBoolConverter().fromJson(json['deleted']),
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{

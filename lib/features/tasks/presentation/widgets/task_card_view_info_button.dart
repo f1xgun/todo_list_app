@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/core/constants/app_route_constants.dart';
 import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class TaskCardViewInfoButton extends StatelessWidget {
   const TaskCardViewInfoButton({required this.task, super.key});

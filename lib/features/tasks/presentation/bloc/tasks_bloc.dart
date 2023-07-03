@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 part 'tasks_event.dart';
 part 'tasks_state.dart';

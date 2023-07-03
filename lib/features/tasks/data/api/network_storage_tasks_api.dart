@@ -1,18 +1,17 @@
-import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/error/exceptions.dart';
 import 'package:todo_list_app/core/managers/network_manager.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
-import 'package:todo_list_app/features/tasks/domain/response_data.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class NetworkStorageTasksApi {
   final NetworkManager _networkManager;
   final PersistenceManager _persistenceManager;
 
-  NetworkStorageTasksApi()
-      : _networkManager = GetIt.I<NetworkManager>(),
-        _persistenceManager = GetIt.I<PersistenceManager>();
+  NetworkStorageTasksApi({required networkManager, required persistenceManager})
+      : _networkManager = networkManager,
+        _persistenceManager = persistenceManager;
 
   Future<ResponseData<Task>> addTask(Task task) async {
     final requestData = <String, dynamic>{'element': task.toJson()};

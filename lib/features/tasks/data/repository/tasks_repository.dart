@@ -1,16 +1,17 @@
-import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
-import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/data/api/tasks_api.dart';
-import 'package:todo_list_app/features/tasks/domain/response_data.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class TasksRepository {
-  TasksRepository()
-      : _persistenceManager = GetIt.I<PersistenceManager>(),
-        _networkStorage = GetIt.I<NetworkStorageTasksApi>(),
-        _localStorage = GetIt.I<LocalStorageTasksApi>();
+  TasksRepository(
+      {required persistenceManager,
+      required networkStorage,
+      required localStorage})
+      : _persistenceManager = persistenceManager,
+        _networkStorage = networkStorage,
+        _localStorage = localStorage;
 
   final PersistenceManager _persistenceManager;
   final TasksApi _localStorage;

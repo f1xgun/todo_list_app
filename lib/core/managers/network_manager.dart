@@ -14,7 +14,7 @@ class NetworkManager {
 
   final PersistenceManager _persistenceManager;
 
-  NetworkManager() : _persistenceManager = GetIt.I<PersistenceManager>();
+  NetworkManager({required persistenceManager}) : _persistenceManager = persistenceManager;
 
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(

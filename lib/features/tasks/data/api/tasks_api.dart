@@ -1,4 +1,4 @@
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 abstract class TasksApi {
   Future<List<Task>> getTasks();

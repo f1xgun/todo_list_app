@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class TaskCheckbox extends StatelessWidget {
   const TaskCheckbox({
