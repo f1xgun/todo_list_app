@@ -16,25 +16,22 @@ class TaskCardViewImportanceIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.read<ThemeBloc>().state.colorPalette;
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 6),
-      child: switch (importance) {
-        Importance.lowPriority => SvgPicture.asset(
-            'assets/low_priority_importance.svg',
-            colorFilter: ColorFilter.mode(
-              colors.colorLabelTertiary,
-              BlendMode.srcIn,
-            ),
+    return switch (importance) {
+      Importance.lowPriority => SvgPicture.asset(
+          'assets/low_priority_importance.svg',
+          colorFilter: ColorFilter.mode(
+            colors.colorLabelTertiary,
+            BlendMode.srcIn,
           ),
-        Importance.highPriority => SvgPicture.asset(
-            'assets/high_priority_importance.svg',
-            colorFilter: ColorFilter.mode(
-              colors.colorRed,
-              BlendMode.srcIn,
-            ),
+        ),
+      Importance.highPriority => SvgPicture.asset(
+          'assets/high_priority_importance.svg',
+          colorFilter: ColorFilter.mode(
+            colors.colorRed,
+            BlendMode.srcIn,
           ),
-        _ => SvgPicture.asset(''),
-      },
-    );
+        ),
+      _ => const SizedBox.shrink(),
+    };
   }
 }

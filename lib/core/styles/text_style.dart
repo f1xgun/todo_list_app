@@ -6,7 +6,8 @@ class AppTextStyles {
   AppTextStyles({required this.colorPalette});
 
   TextStyle get font {
-    return const TextStyle().copyWith(color: colorPalette.colorLabelPrimary);
+    return const TextStyle(fontFamily: 'Roboto')
+        .copyWith(color: colorPalette.colorLabelPrimary);
   }
 
   TextStyle get largeTitle =>

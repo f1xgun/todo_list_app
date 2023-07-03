@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
 enum Importance {
-  @JsonValue('none')
+  @JsonValue('basic')
   none,
   @JsonValue('low')
   lowPriority,
-  @JsonValue('high')
+  @JsonValue('important')
   highPriority
 }

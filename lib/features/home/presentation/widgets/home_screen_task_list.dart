@@ -12,35 +12,52 @@ class HomeScreenTaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, state) {
-      final completedTasks = state.tasks.where((task) => task.isDone).toList();
-      final noCompletedTasks =
-          state.tasks.where((task) => !task.isDone).toList();
-      final tasks = !state.completedVisible
-          ? noCompletedTasks
-          : [...noCompletedTasks, ...completedTasks];
-      return SliverToBoxAdapter(
-        child: Card(
-          color: colors.colorBackSecondary,
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: tasks.length + 1,
-            itemBuilder: (context, index) {
-              if (index == tasks.length) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(47, 7, 14, 7),
-                  child: const HomeScreenNewTaskField(),
-                );
-              } else {
-                return TaskCard(
-                  task: tasks[index],
-                );
-              }
-            },
+      if (state.status == TasksStatus.loading) {
+        return const SliverToBoxAdapter(
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
-        ),
-      );
+        );
+      } else if (state.status == TasksStatus.failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Ошибка загрузки задач'),
+            backgroundColor: colors.colorRed,
+          ),
+        );
+        return const SizedBox();
+      } else {
+        final completedTasks =
+            state.tasks.where((task) => task.isDone).toList();
+        final noCompletedTasks =
+            state.tasks.where((task) => !task.isDone).toList();
+        final tasks = !state.completedVisible
+            ? noCompletedTasks
+            : [...noCompletedTasks, ...completedTasks];
+        return SliverToBoxAdapter(
+          child: Card(
+            color: colors.colorBackSecondary,
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: tasks.length + 1,
+              itemBuilder: (context, index) {
+                if (index == tasks.length) {
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(47, 7, 14, 7),
+                    child: const HomeScreenNewTaskField(),
+                  );
+                } else {
+                  return TaskCard(
+                    task: tasks[index],
+                  );
+                }
+              },
+            ),
+          ),
+        );
+      }
     });
   }
 }

@@ -36,7 +36,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     } else {
       context.read<TasksBloc>().add(UpdateTask(
           task: taskDetailBloc.state.currentTask
-              .copyWith(text: controller.text)));
+              .copyWith(text: controller.text, changedAt: DateTime.now())));
     }
   }
 

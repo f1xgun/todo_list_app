@@ -4,7 +4,7 @@ import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 import 'package:todo_list_app/features/tasks/domain/task_model.dart';
 
-class TaskCheckbox extends StatefulWidget {
+class TaskCheckbox extends StatelessWidget {
   const TaskCheckbox({
     required this.task,
     required this.onChanged,
@@ -17,35 +17,28 @@ class TaskCheckbox extends StatefulWidget {
   final bool value;
 
   @override
-  State<TaskCheckbox> createState() => _TaskCheckboxState();
-}
-
-class _TaskCheckboxState extends State<TaskCheckbox> {
-  @override
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
     return InkWell(
       radius: 18,
       child: Container(
         decoration: BoxDecoration(
-          color:
-              !widget.value && widget.task.importance == Importance.highPriority
-                  ? colors.colorRed.withOpacity(0.16)
-                  : Colors.transparent,
+          color: !value && task.importance == Importance.highPriority
+              ? colors.colorRed.withOpacity(0.16)
+              : Colors.transparent,
         ),
         height: 18,
         width: 18,
-        margin: const EdgeInsets.only(right: 15),
+        // margin: const EdgeInsets.only(right: 15),
         child: Checkbox(
-          value: widget.value,
+          value: value,
           activeColor: colors.colorGreen,
-          fillColor:
-              !widget.value && widget.task.importance == Importance.highPriority
-                  ? MaterialStateProperty.all(colors.colorRed)
-                  : null,
+          fillColor: !value && task.importance == Importance.highPriority
+              ? MaterialStateProperty.all(colors.colorRed)
+              : null,
           checkColor: colors.colorBackPrimary,
           onChanged: (_) {
-            widget.onChanged(!widget.value);
+            onChanged(!value);
           },
         ),
       ),
