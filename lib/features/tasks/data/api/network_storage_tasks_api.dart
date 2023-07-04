@@ -2,10 +2,11 @@ import 'package:todo_list_app/core/error/exceptions.dart';
 import 'package:todo_list_app/core/managers/network_manager.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
+import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
-class NetworkStorageTasksApi {
+class NetworkStorageTasksApi implements NetworkTasksApi {
   final NetworkManager _networkManager;
   final PersistenceManager _persistenceManager;
 
@@ -13,6 +14,7 @@ class NetworkStorageTasksApi {
       : _networkManager = networkManager,
         _persistenceManager = persistenceManager;
 
+  @override
   Future<ResponseData<Task>> addTask(Task task) async {
     final requestData = <String, dynamic>{'element': task.toJson()};
     try {
@@ -42,6 +44,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<Task>> deleteTask(String id) async {
     try {
       final response = await _networkManager.delete('/list/$id');
@@ -70,6 +73,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<Task>> getTask(String id) async {
     try {
       final response = await _networkManager.get('/list/$id');
@@ -100,6 +104,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<List<Task>>> getTasks() async {
     try {
       final response = await _networkManager.get('/list');
@@ -133,6 +138,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<Task>> updateTask(Task task) async {
     final requestData = {'element': task.toJson()};
     try {
@@ -166,6 +172,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<List<Task>>> syncTasks(List<Task> tasks) async {
     final requestData = <String, dynamic>{
       'list': tasks.map((task) => task.toJson()).toList(),

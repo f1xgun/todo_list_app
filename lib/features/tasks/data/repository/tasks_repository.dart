@@ -1,6 +1,6 @@
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
-import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
-import 'package:todo_list_app/features/tasks/data/api/tasks_api.dart';
+import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
+import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
@@ -14,24 +14,21 @@ class TasksRepository {
         _localStorage = localStorage;
 
   final PersistenceManager _persistenceManager;
-  final TasksApi _localStorage;
-  final NetworkStorageTasksApi _networkStorage;
+  final LocalTasksApi _localStorage;
+  final NetworkTasksApi _networkStorage;
 
-  Future<bool> checkChanges() async {
-    final networkStorageTasks = (await _networkStorage.getTasks()).data ?? [];
-    final localTasks = await _localStorage.getTasks();
-    return !networkStorageTasks.every(localTasks.contains) ||
-        !localTasks.every(networkStorageTasks.contains);
+  Future<bool> checkChanges(List<Task> local, List<Task> network) async {
+    return !network.every(local.contains) ||
+        !local.every(network.contains);
   }
 
-  Future<void> syncStorages() async {
+  Future<List<Task>> syncStorages() async {
     final network = await _networkStorage.getTasks();
+    final localTasks = await getLocalTasks();
     if (await _persistenceManager.getTasksRevision() != network.revision ||
-        await checkChanges()) {
+        await checkChanges(localTasks, network.data ?? [])) {
       await _persistenceManager.saveTasksRevision(
           revision: network.revision ?? 0);
-      final localTasks = await getLocalTasks();
-
       if (network.data != null) {
         final localTasksMap = <String, Task>{
           for (var task in localTasks) task.id: task
@@ -51,6 +48,7 @@ class TasksRepository {
       }
       await _networkStorage.syncTasks(await _localStorage.getTasks());
     }
+    return _localStorage.getTasks();
   }
 
   Future<List<Task>> getLocalTasks() async {
