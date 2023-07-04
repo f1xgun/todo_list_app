@@ -34,7 +34,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void saveTask(BuildContext context) {
     final taskDetailBloc = context.read<TaskDetailsBloc>();
-    if (widget.isNewTask) {
+    if (taskDetailBloc.state.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
           task: taskDetailBloc.state.currentTask
               .copyWith(text: controller.text)));
@@ -53,14 +53,21 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       logger.info('Open task details page to edit task');
     }
 
-    final task = context.read<TasksBloc>().state.tasks.firstWhere(
-        (task) => task.id == widget.taskId,
-        orElse: () => Task(
-            text: '', createdAt: DateTime.now(), changedAt: DateTime.now()));
+    var isNewTask = widget.isNewTask;
+
+    final task = context
+        .read<TasksBloc>()
+        .state
+        .tasks
+        .firstWhere((task) => task.id == widget.taskId, orElse: () {
+      isNewTask = true;
+      return Task(
+          text: '', createdAt: DateTime.now(), changedAt: DateTime.now());
+    });
 
     return BlocProvider(
       create: (context) =>
-          TaskDetailsBloc(currentTask: task, isNewTask: widget.isNewTask),
+          TaskDetailsBloc(currentTask: task, isNewTask: isNewTask),
       child: BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
         builder: (context, state) {
           return Scaffold(
