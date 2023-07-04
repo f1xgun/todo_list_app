@@ -18,21 +18,6 @@ class TaskDetailsScreenAppBar extends StatelessWidget
       backgroundColor: colors.colorBackPrimary,
       scrolledUnderElevation: 4,
       elevation: 0,
-      leading: SizedBox(
-        height: 14,
-        width: 14,
-        child: IconButton(
-          splashRadius: 25,
-          onPressed: () {
-            Navigator.pop(context);
-            logger.info('Close task details screen w/o saving task');
-          },
-          icon: Icon(
-            Icons.close,
-            color: colors.colorLabelPrimary,
-          ),
-        ),
-      ),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),

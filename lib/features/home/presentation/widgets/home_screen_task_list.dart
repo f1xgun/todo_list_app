@@ -7,7 +7,9 @@ import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/task_card.dart';
 
 class HomeScreenTaskList extends StatelessWidget {
-  const HomeScreenTaskList({super.key});
+  const HomeScreenTaskList({required this.onTaskTap, super.key});
+
+  final void Function(String taskId) onTaskTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class HomeScreenTaskList extends StatelessWidget {
         return SliverToBoxAdapter(
           child: Card(
             color: colors.colorBackSecondary,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -52,6 +54,7 @@ class HomeScreenTaskList extends StatelessWidget {
                 } else {
                   return TaskCard(
                     task: tasks[index],
+                    onTap: onTaskTap,
                   );
                 }
               },

@@ -15,19 +15,19 @@ import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.da
 Future<void> main() async {
   await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await configureDependencies();
+    await _initDependencies();
     initLogger();
 
     logger.info('Start main');
 
     ErrorHandler.init();
     runApp(
-      const MainApp(),
+      MainApp(),
     );
   }, ErrorHandler.recordError);
 }
 
-Future<void> configureDependencies() async {
+Future<void> _initDependencies() async {
   final localStorage = LocalStorageTasksApi();
   await localStorage.init();
   GetIt.I.registerSingleton<TasksApi>(localStorage);

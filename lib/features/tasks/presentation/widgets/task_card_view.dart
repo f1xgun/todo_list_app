@@ -8,8 +8,9 @@ import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_checkbox.dart';
 
 class TaskCardView extends StatelessWidget {
-  const TaskCardView({required this.task, super.key});
+  const TaskCardView({required this.task, required this.onTap, super.key});
   final Task task;
+  final void Function(String taskId) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class TaskCardView extends StatelessWidget {
           Expanded(child: TaskCardViewText(task: task)),
           Padding(
             padding: const EdgeInsets.only(left: 14.0),
-            child: TaskCardViewInfoButton(task: task),
+            child: TaskCardViewInfoButton(task: task, onTap: onTap),
           ),
         ],
       ),

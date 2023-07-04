@@ -38,9 +38,6 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final isNew = arguments['isNew'];
     return BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
       builder: (context, state) {
         return ListView(
@@ -68,7 +65,7 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
             Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TaskDetailsDeleteButton(isNew: isNew),
+              child: TaskDetailsDeleteButton(isNew: state.isNewTask),
             ),
           ],
         );

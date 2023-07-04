@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/bloc/task_details_bloc.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_screen_appbar.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_screen_body.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
-  const TaskDetailsScreen({super.key});
+  const TaskDetailsScreen(
+      {required this.taskId, required this.isNewTask, super.key});
+
+  final String taskId;
+  final bool isNewTask;
 
   @override
   State<TaskDetailsScreen> createState() => _TaskDetailsScreenState();
@@ -14,7 +20,6 @@ class TaskDetailsScreen extends StatefulWidget {
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final TextEditingController controller = TextEditingController();
-  late Map<String, dynamic> navigatorArguments;
 
   @override
   void initState() {
@@ -29,7 +34,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void saveTask(BuildContext context) {
     final taskDetailBloc = context.read<TaskDetailsBloc>();
-    if (navigatorArguments['isNew']) {
+    if (widget.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
           task: taskDetailBloc.state.currentTask
               .copyWith(text: controller.text)));
@@ -42,11 +47,20 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    navigatorArguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    if (widget.isNewTask) {
+      logger.info('Open task details page to create new task');
+    } else {
+      logger.info('Open task details page to edit task');
+    }
+
+    final task = context.read<TasksBloc>().state.tasks.firstWhere(
+        (task) => task.id == widget.taskId,
+        orElse: () => Task(
+            text: '', createdAt: DateTime.now(), changedAt: DateTime.now()));
+
     return BlocProvider(
       create: (context) =>
-          TaskDetailsBloc(currentTask: navigatorArguments['task']),
+          TaskDetailsBloc(currentTask: task, isNewTask: widget.isNewTask),
       child: BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
         builder: (context, state) {
           return Scaffold(
