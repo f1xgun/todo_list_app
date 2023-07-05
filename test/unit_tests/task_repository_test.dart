@@ -10,13 +10,13 @@ import '../test_doubles/persistence_manager_mock.mocks.dart';
 
 void main() {
   late MockLocalTasksApi localStorage;
-  late CustomMockNetworkTasksApi networkStorage;
+  late MockNetworkTasksApi networkStorage;
   late MockPersistenceManager persistenceManager;
   late TasksRepository repository;
 
   setUp(() async {
     localStorage = MockLocalTasksApi();
-    networkStorage = CustomMockNetworkTasksApi();
+    networkStorage = MockNetworkTasksApi();
     persistenceManager = MockPersistenceManager();
     repository = TasksRepository(
         persistenceManager: persistenceManager,

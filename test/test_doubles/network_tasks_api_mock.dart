@@ -3,7 +3,7 @@ import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
-class CustomMockNetworkTasksApi extends Mock implements NetworkTasksApi {
+class MockNetworkTasksApi extends Mock implements NetworkTasksApi {
   List<Task> tasks = [];
   int revision = 1;
 

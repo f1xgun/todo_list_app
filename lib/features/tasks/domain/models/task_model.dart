@@ -96,7 +96,7 @@ class Task extends Equatable {
 
   @override
   String toString() {
-    return 'Task { id: $id, text: $text, importance: $importance, isDone: $isDone, deadline: $deadline, color: $color, createdAt: $createdAt, changedAt: $changedAt, lastUpdatedBy: $lastUpdatedBy }';
+     return 'Task { id: $id, text: $text, importance: $importance, isDone: $isDone, deadline: $deadline, color: $color, createdAt: $createdAt, changedAt: $changedAt, lastUpdatedBy: $lastUpdatedBy }';
   }
 
   String toStringWithTypes() {

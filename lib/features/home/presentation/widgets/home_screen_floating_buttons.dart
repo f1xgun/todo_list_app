@@ -28,6 +28,7 @@ class HomeScreenFloatingButtons extends StatelessWidget {
         ),
         const Spacer(),
         FloatingActionButton(
+          tooltip: 'Add new task',
           heroTag: 'addTaskButton',
           backgroundColor: colors.colorBlue,
           child: Icon(color: colors.colorWhite, Icons.add),

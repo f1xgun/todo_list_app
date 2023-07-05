@@ -23,6 +23,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
           padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
           child: SizedBox(
             child: TextButton(
+              key: const ValueKey('saveTaskButton'),
               onPressed: () {
                 saveTask(context);
                 Navigator.pop(context);
