@@ -34,7 +34,7 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Add task to network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Add task to network storage error: $e');
       return ResponseData.error(400);
@@ -63,7 +63,7 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Delete task from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Delete task from network storage error: $e');
       return ResponseData.error(400);
@@ -94,10 +94,10 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Get task from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Get task from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Get task from network storage error: $e');
       return ResponseData.error(500);
@@ -128,10 +128,10 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Get tasks from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Get tasks from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Get tasks from network storage error: $e');
       return ResponseData.error(500);
@@ -162,10 +162,10 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Update task in network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Update task in network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Update task in network storage error: $e');
       return ResponseData.error(500);
@@ -200,10 +200,10 @@ class NetworkStorageTasksApi implements NetworkTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Sync tasks from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Sync tasks from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Sync tasks from network storage error: $e');
       return ResponseData.error(500);
