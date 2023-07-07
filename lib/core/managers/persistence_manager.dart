@@ -18,14 +18,14 @@ class PersistenceManager {
     await instance.setInt(_tasksRevisionKey, revision);
   }
 
-  Future<String?> getDeviceId() async {
+  Future<String> getDeviceId() async {
     final instance = await SharedPreferences.getInstance();
     var data = instance.getString(_deviceIdKey);
     if (data == null) {
       await generateAndSaveDeviceId();
       data = instance.getString(_deviceIdKey);
     }
-    return data;
+    return data ?? '';
   }
 
   Future<void> generateAndSaveDeviceId() async {

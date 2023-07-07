@@ -6,33 +6,32 @@ part of 'task_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Task _$TaskFromJson(Map<String, dynamic> json) => Task(
+_$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       text: json['text'] as String,
       createdAt: const TimeStampConverter().fromJson(json['created_at'] as int),
       changedAt: const TimeStampConverter().fromJson(json['changed_at'] as int),
-      id: json['id'] as String?,
+      id: json['id'] as String? ?? '',
       importance:
           $enumDecodeNullable(_$ImportanceEnumMap, json['importance']) ??
               Importance.none,
-      isDone: const BoolOrIntToBoolConverter().fromJson(json['done'])!,
+      isDone: const BoolOrIntToBoolConverter().fromJson(json['done']),
       deadline:
           const TimeStampOrNullConverter().fromJson(json['deadline'] as int?),
       color: json['color'] as String?,
       lastUpdatedBy: json['last_updated_by'] as String? ?? 'example',
-      deleted: json['deleted'] == null
-          ? false
-          : const BoolOrIntToBoolConverter().fromJson(json['deleted']),
+      deleted:
+          const NullOrBoolToBoolConverter().fromJson(json['deleted'] as bool?),
     );
 
-Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'text': instance.text,
-      'importance': _$ImportanceEnumMap[instance.importance]!,
-      'done': instance.isDone,
-      'deadline': const TimeStampOrNullConverter().toJson(instance.deadline),
-      'color': instance.color,
       'created_at': const TimeStampConverter().toJson(instance.createdAt),
       'changed_at': const TimeStampConverter().toJson(instance.changedAt),
+      'id': instance.id,
+      'importance': _$ImportanceEnumMap[instance.importance]!,
+      'done': const BoolOrIntToBoolConverter().toJson(instance.isDone),
+      'deadline': const TimeStampOrNullConverter().toJson(instance.deadline),
+      'color': instance.color,
       'last_updated_by': instance.lastUpdatedBy,
     };
 

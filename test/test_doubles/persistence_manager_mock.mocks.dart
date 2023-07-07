@@ -48,13 +48,13 @@ class MockPersistenceManager extends _i1.Mock
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
   @override
-  _i3.Future<String?> getDeviceId() => (super.noSuchMethod(
+  _i3.Future<String> getDeviceId() => (super.noSuchMethod(
         Invocation.method(
           #getDeviceId,
           [],
         ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+        returnValue: _i3.Future<String>.value(''),
+      ) as _i3.Future<String>);
   @override
   _i3.Future<void> generateAndSaveDeviceId() => (super.noSuchMethod(
         Invocation.method(

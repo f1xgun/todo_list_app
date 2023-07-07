@@ -18,8 +18,7 @@ class TasksRepository {
   final NetworkTasksApi _networkStorage;
 
   Future<bool> checkChanges(List<Task> local, List<Task> network) async {
-    return !network.every(local.contains) ||
-        !local.every(network.contains);
+    return !network.every(local.contains) || !local.every(network.contains);
   }
 
   Future<List<Task>> syncStorages() async {
