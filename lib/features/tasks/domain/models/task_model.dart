@@ -32,7 +32,7 @@ class Task with _$Task {
     String? color,
     @JsonKey(name: 'last_updated_by') @Default('example') String lastUpdatedBy,
     @Default(false)
-    @NullOrBoolToBoolConverter()
+    @NullOrIntToBoolConverter()
     @JsonKey(includeToJson: false)
     bool? deleted,
   }) = _Task;
@@ -103,12 +103,12 @@ class BoolOrIntToBoolConverter implements JsonConverter<bool, dynamic> {
   bool toJson(bool object) => object;
 }
 
-class NullOrBoolToBoolConverter implements JsonConverter<bool, bool?> {
-  const NullOrBoolToBoolConverter();
+class NullOrIntToBoolConverter implements JsonConverter<bool, int?> {
+  const NullOrIntToBoolConverter();
 
   @override
-  bool fromJson(bool? json) => json ?? false;
+  bool fromJson(int? json) => json is int ? json == 1 : false;
 
   @override
-  bool toJson(bool object) => object;
+  int toJson(bool object) => object ? 1 : 0;
 }

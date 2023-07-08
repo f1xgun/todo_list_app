@@ -37,7 +37,7 @@ mixin _$Task {
   String? get color => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_updated_by')
   String get lastUpdatedBy => throw _privateConstructorUsedError;
-  @NullOrBoolToBoolConverter()
+  @NullOrIntToBoolConverter()
   @JsonKey(includeToJson: false)
   bool? get deleted => throw _privateConstructorUsedError;
 
@@ -69,7 +69,7 @@ abstract class $TaskCopyWith<$Res> {
       String? color,
       @JsonKey(name: 'last_updated_by')
           String lastUpdatedBy,
-      @NullOrBoolToBoolConverter()
+      @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
           bool? deleted});
 }
@@ -167,7 +167,7 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String? color,
       @JsonKey(name: 'last_updated_by')
           String lastUpdatedBy,
-      @NullOrBoolToBoolConverter()
+      @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
           bool? deleted});
 }
@@ -258,7 +258,7 @@ class _$_Task implements _Task {
       this.color,
       @JsonKey(name: 'last_updated_by')
           this.lastUpdatedBy = 'example',
-      @NullOrBoolToBoolConverter()
+      @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
           this.deleted = false});
 
@@ -293,7 +293,7 @@ class _$_Task implements _Task {
   @JsonKey(name: 'last_updated_by')
   final String lastUpdatedBy;
   @override
-  @NullOrBoolToBoolConverter()
+  @NullOrIntToBoolConverter()
   @JsonKey(includeToJson: false)
   final bool? deleted;
 
@@ -362,7 +362,7 @@ abstract class _Task implements Task {
       final String? color,
       @JsonKey(name: 'last_updated_by')
           final String lastUpdatedBy,
-      @NullOrBoolToBoolConverter()
+      @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
           final bool? deleted}) = _$_Task;
 
@@ -395,7 +395,7 @@ abstract class _Task implements Task {
   @JsonKey(name: 'last_updated_by')
   String get lastUpdatedBy;
   @override
-  @NullOrBoolToBoolConverter()
+  @NullOrIntToBoolConverter()
   @JsonKey(includeToJson: false)
   bool? get deleted;
   @override

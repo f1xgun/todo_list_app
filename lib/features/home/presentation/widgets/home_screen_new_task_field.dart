@@ -17,7 +17,7 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
 
   void addNewTask(BuildContext context) {
     context.read<TasksBloc>().add(AddTask(
-        task: Task(
+        task: Task.withDefaultId(
             text: controller.text,
             createdAt: DateTime.now(),
             changedAt: DateTime.now())));

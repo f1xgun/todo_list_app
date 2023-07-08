@@ -14,13 +14,16 @@ _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       importance:
           $enumDecodeNullable(_$ImportanceEnumMap, json['importance']) ??
               Importance.none,
-      isDone: const BoolOrIntToBoolConverter().fromJson(json['done']),
+      isDone: json['done'] == null
+          ? false
+          : const BoolOrIntToBoolConverter().fromJson(json['done']),
       deadline:
           const TimeStampOrNullConverter().fromJson(json['deadline'] as int?),
       color: json['color'] as String?,
       lastUpdatedBy: json['last_updated_by'] as String? ?? 'example',
-      deleted:
-          const NullOrBoolToBoolConverter().fromJson(json['deleted'] as bool?),
+      deleted: json['deleted'] == null
+          ? false
+          : const NullOrIntToBoolConverter().fromJson(json['deleted'] as int?),
     );
 
 Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
