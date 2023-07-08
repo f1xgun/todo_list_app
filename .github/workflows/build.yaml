@@ -1,0 +1,113 @@
+name: Test, build and deploy app
+
+on:
+  push:
+    branches:
+      - 'master'
+
+  pull_request:
+    branches:
+      - 'master'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    name: 'Analyze'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Start analyzer
+        run: flutter analyze --no-fatal-infos
+
+      - name: Start formatter
+        run: flutter format --set-exit-if-changed .
+
+  test:
+    name: 'Test before build and deploy'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup java-version
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+          cache: gradle
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get Packages
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Run integration tests
+        run: flutter integration_test
+
+  build_anroid:
+    name: Build and Deploy Android
+    runs-on: ubuntu-latest
+    needs: [analyze, test]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+          cache: gradle
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk
+
+  build_ios:
+    name: Build and Deploy iOS
+    runs-on: macos-latest
+    needs: [analyze, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
