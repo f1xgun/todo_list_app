@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/bloc/task_details_bloc.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/widgets/task_details_screen_appbar.dart';
@@ -34,14 +35,15 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void saveTask(BuildContext context) {
     final taskDetailBloc = context.read<TaskDetailsBloc>();
+    final taskText = controller.text.isEmpty
+        ? AppLocalizations.of(context)!.emptyTaskText
+        : controller.text;
     if (taskDetailBloc.state.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
-          task: taskDetailBloc.state.currentTask
-              .copyWith(text: controller.text)));
+          task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
     } else {
       context.read<TasksBloc>().add(UpdateTask(
-          task: taskDetailBloc.state.currentTask
-              .copyWith(text: controller.text)));
+          task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
     }
   }
 

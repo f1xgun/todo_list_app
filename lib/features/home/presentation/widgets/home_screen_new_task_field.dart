@@ -16,9 +16,12 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
   TextEditingController controller = TextEditingController();
 
   void addNewTask(BuildContext context) {
+    final taskText = controller.text.isEmpty
+        ? AppLocalizations.of(context)!.emptyTaskText
+        : controller.text;
     context.read<TasksBloc>().add(AddTask(
         task: Task.withDefaultId(
-            text: controller.text,
+            text: taskText,
             createdAt: DateTime.now(),
             changedAt: DateTime.now())));
     controller.text = '';

@@ -27,10 +27,13 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   Future<void> _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     emit(state.copyWith(status: TasksStatus.loading));
+
     try {
       final tasks = (await _tasksRepository.getTasks())
           .where((task) => !(task.deleted ?? false))
-          .toList()..sort((a, b) => b.changedAt.compareTo(a.changedAt));
+          .toList()
+        ..sort((a, b) => b.changedAt.compareTo(a.changedAt));
+
       emit(state.copyWith(tasks: tasks, status: TasksStatus.success));
       logger.info('Load tasks: ${tasks.length}');
     } on Exception catch (e) {
@@ -41,10 +44,16 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   Future<void> _onAddTask(AddTask event, Emitter<TasksState> emit) async {
     final deviceId = await _persistenceManager.getDeviceId();
-    final task = event.task.copyWith(lastUpdatedBy: deviceId, createdAt: DateTime.now(), changedAt: DateTime.now());
-    final updatedTasks = [...state.tasks, task]..sort((a, b) => b.changedAt.compareTo(a.changedAt));
+    final task = event.task.copyWith(
+        lastUpdatedBy: deviceId,
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now());
+    final updatedTasks = [...state.tasks, task]
+      ..sort((a, b) => b.changedAt.compareTo(a.changedAt));
+
     emit(state.copyWith(tasks: updatedTasks));
     logger.info('AddTask in temp array');
+
     try {
       await _tasksRepository.addTask(task);
       logger.info('AddTask to storages: $task');
@@ -56,10 +65,15 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   Future<void> _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) async {
     final updatedTasks = [
       for (final t in state.tasks)
-        if (t.id == event.task.id) event.task.copyWith(changedAt: DateTime.now()) else t
+        if (t.id == event.task.id)
+          event.task.copyWith(changedAt: DateTime.now())
+        else
+          t
     ]..sort((a, b) => b.changedAt.compareTo(a.changedAt));
+
     emit(state.copyWith(tasks: updatedTasks));
     logger.info('Update task in temp array');
+    
     try {
       await _tasksRepository.updateTask(event.task);
       logger.info('Update task in storages: ${event.task}');
@@ -73,9 +87,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       for (final t in state.tasks)
         if (t.id != event.task.id) t else null
     ];
+
     emit(state.copyWith(
         tasks: updatedTasks.where((t) => t != null).cast<Task>().toList()));
     logger.info('Delete task from temp array');
+    
     try {
       await _tasksRepository.deleteTask(event.task.id);
       logger.info('Delete task from storages: ${event.task}');

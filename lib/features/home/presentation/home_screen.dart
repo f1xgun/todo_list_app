@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: HomeScreenFloatingButtons(),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
