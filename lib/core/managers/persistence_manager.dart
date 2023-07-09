@@ -2,35 +2,37 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class PersistenceManager {
-  const PersistenceManager();
+  final SharedPreferences _sharedPreferences;
+  const PersistenceManager({required SharedPreferences sharedPreferences})
+      : _sharedPreferences = sharedPreferences;
+
+  // const PersistenceManager();
+
+
 
   static const _tasksRevisionKey = 'revision_key';
   static const _deviceIdKey = 'device_id_key';
 
   Future<int?> getTasksRevision() async {
-    final instance = await SharedPreferences.getInstance();
-    final data = instance.getInt(_tasksRevisionKey);
+    final data = _sharedPreferences.getInt(_tasksRevisionKey);
     return data;
   }
 
   Future<void> saveTasksRevision({required int revision}) async {
-    final instance = await SharedPreferences.getInstance();
-    await instance.setInt(_tasksRevisionKey, revision);
+    await _sharedPreferences.setInt(_tasksRevisionKey, revision);
   }
 
   Future<String> getDeviceId() async {
-    final instance = await SharedPreferences.getInstance();
-    var data = instance.getString(_deviceIdKey);
+    var data = _sharedPreferences.getString(_deviceIdKey);
     if (data == null) {
       await generateAndSaveDeviceId();
-      data = instance.getString(_deviceIdKey);
+      data = _sharedPreferences.getString(_deviceIdKey);
     }
     return data ?? '';
   }
 
   Future<void> generateAndSaveDeviceId() async {
     final deviceId = const Uuid().v4();
-    final instance = await SharedPreferences.getInstance();
-    await instance.setString(_deviceIdKey, deviceId);
+    await _sharedPreferences.setString(_deviceIdKey, deviceId);
   }
 }
