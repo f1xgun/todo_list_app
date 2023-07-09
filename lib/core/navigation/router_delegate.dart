@@ -23,11 +23,8 @@ class CustomRouterDelegate extends RouterDelegate<NavigationState>
     return Navigator(
       key: navigatorKey,
       pages: [
-        MaterialPage(
-          child: HomeScreen(
-            onTaskTap: _showTaskDetails,
-            onNewTaskButtonTap: _showNewTaskScreen,
-          ),
+        const MaterialPage(
+          child: HomeScreen(),
         ),
         if (state?.isDetailsScreen ?? false)
           MaterialPage(
@@ -62,16 +59,6 @@ class CustomRouterDelegate extends RouterDelegate<NavigationState>
   @override
   Future<void> setNewRoutePath(NavigationState configuration) async {
     state = configuration;
-    notifyListeners();
-  }
-
-  void _showTaskDetails(String taskId) {
-    state = NavigationState.taskDetails(taskId);
-    notifyListeners();
-  }
-
-  void _showNewTaskScreen() {
-    state = NavigationState.newTask();
     notifyListeners();
   }
 }

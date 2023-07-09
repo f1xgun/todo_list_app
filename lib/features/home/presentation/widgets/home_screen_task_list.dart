@@ -7,9 +7,7 @@ import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/task_card.dart';
 
 class HomeScreenTaskList extends StatelessWidget {
-  const HomeScreenTaskList({required this.onTaskTap, super.key});
-
-  final void Function(String taskId) onTaskTap;
+  const HomeScreenTaskList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +50,7 @@ class HomeScreenTaskList extends StatelessWidget {
                     child: const HomeScreenNewTaskField(),
                   );
                 } else {
-                  return TaskCard(
-                    task: tasks[index],
-                    onTap: onTaskTap,
-                  );
+                  return TaskCard(task: tasks[index]);
                 }
               },
             ),
