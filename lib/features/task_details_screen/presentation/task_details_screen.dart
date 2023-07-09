@@ -63,7 +63,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         .tasks
         .firstWhere((task) => task.id == widget.taskId, orElse: () {
       isNewTask = true;
-      return Task(
+      return Task.withDefaultId(
           text: '', createdAt: DateTime.now(), changedAt: DateTime.now());
     });
 
