@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_list_app/core/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenFloatingButtons extends StatelessWidget {
-  const HomeScreenFloatingButtons(
-      {required this.onNewTaskButtonTap, super.key});
-
-  final void Function() onNewTaskButtonTap;
+  const HomeScreenFloatingButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +15,7 @@ class HomeScreenFloatingButtons extends StatelessWidget {
     }
 
     final colors = AppTheme.of(context).colors;
+    final navigationManager = GetIt.I<NavigationManager>();
 
     return Row(
       children: [
@@ -32,7 +32,7 @@ class HomeScreenFloatingButtons extends StatelessWidget {
           heroTag: 'addTaskButton',
           backgroundColor: colors.colorBlue,
           child: Icon(color: colors.colorWhite, Icons.add),
-          onPressed: onNewTaskButtonTap,
+          onPressed: navigationManager.showNewTaskScreen,
         ),
       ],
     );

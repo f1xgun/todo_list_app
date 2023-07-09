@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/app.dart';
+import 'package:todo_list_app/core/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/managers/network_manager.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/error_handler.dart';
@@ -43,4 +44,5 @@ Future<void> _initDependencies() async {
       localStorage: GetIt.I<LocalTasksApi>(),
       networkStorage: GetIt.I<NetworkTasksApi>(),
       persistenceManager: GetIt.I<PersistenceManager>()));
+  GetIt.I.registerLazySingleton<NavigationManager>(NavigationManager.new);
 }

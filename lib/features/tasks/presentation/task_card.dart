@@ -6,10 +6,8 @@ import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({required this.task, required this.onTap, super.key});
+  const TaskCard({required this.task, super.key});
   final Task task;
-
-  final void Function(String taskId) onTap;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -24,7 +22,7 @@ class _TaskCardState extends State<TaskCard> {
     final size = MediaQuery.of(context).size.width - 16;
     return Dismissible(
       key: ValueKey(widget.task.id),
-      child: TaskCardView(task: widget.task, onTap: widget.onTap),
+      child: TaskCardView(task: widget.task),
       onUpdate: (details) {
         setState(() {
           swipeSize = details.progress * size;
