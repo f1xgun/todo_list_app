@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/core/constants/app_route_constants.dart';
-import 'package:todo_list_app/core/navigation/navigation_state.dart';
+import 'package:todo_list_app/core/domain/constants/app_route_constants.dart';
+import 'package:todo_list_app/core/presentation/navigation/navigation_state.dart';
 
 class CustomRouteInformationParser
     extends RouteInformationParser<NavigationState> {

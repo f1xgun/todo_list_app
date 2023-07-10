@@ -107,7 +107,7 @@ class NullOrIntToBoolConverter implements JsonConverter<bool, int?> {
   const NullOrIntToBoolConverter();
 
   @override
-  bool fromJson(int? json) => json is int ? json == 1 : false;
+  bool fromJson(int? json) => json is int && json == 1;
 
   @override
   int toJson(bool object) => object ? 1 : 0;

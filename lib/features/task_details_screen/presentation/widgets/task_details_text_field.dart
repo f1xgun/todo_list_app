@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 
 class TaskDetailsTextField extends StatelessWidget {
   const TaskDetailsTextField({required this.controller, super.key});

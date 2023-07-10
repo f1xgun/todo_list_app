@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:todo_list_app/core/managers/navigation_manager.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenFloatingButtons extends StatelessWidget {

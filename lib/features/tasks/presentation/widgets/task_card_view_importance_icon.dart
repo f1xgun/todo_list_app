@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 
 class TaskCardViewImportanceIcon extends StatelessWidget {

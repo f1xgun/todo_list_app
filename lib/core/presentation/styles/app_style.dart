@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/core/styles/color_palette.dart';
-import 'package:todo_list_app/core/styles/text_style.dart';
+import 'package:todo_list_app/core/presentation/styles/color_palette.dart';
+import 'package:todo_list_app/core/presentation/styles/text_style.dart';
 
 class AppStyle {
   final ColorPalette colorPalette;

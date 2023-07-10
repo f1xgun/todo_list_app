@@ -8,8 +8,6 @@ class PersistenceManager {
 
   // const PersistenceManager();
 
-
-
   static const _tasksRevisionKey = 'revision_key';
   static const _deviceIdKey = 'device_id_key';
 

@@ -53,25 +53,17 @@ abstract class $TaskCopyWith<$Res> {
   @useResult
   $Res call(
       {String text,
-      @TimeStampConverter()
-      @JsonKey(name: 'created_at')
-          DateTime createdAt,
-      @JsonKey(name: 'changed_at')
-      @TimeStampConverter()
-          DateTime changedAt,
+      @TimeStampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'changed_at') @TimeStampConverter() DateTime changedAt,
       String id,
       Importance importance,
-      @BoolOrIntToBoolConverter()
-      @JsonKey(name: 'done')
-          bool isDone,
-      @TimeStampOrNullConverter()
-          DateTime? deadline,
+      @BoolOrIntToBoolConverter() @JsonKey(name: 'done') bool isDone,
+      @TimeStampOrNullConverter() DateTime? deadline,
       String? color,
-      @JsonKey(name: 'last_updated_by')
-          String lastUpdatedBy,
+      @JsonKey(name: 'last_updated_by') String lastUpdatedBy,
       @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
-          bool? deleted});
+      bool? deleted});
 }
 
 /// @nodoc
@@ -151,25 +143,17 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @useResult
   $Res call(
       {String text,
-      @TimeStampConverter()
-      @JsonKey(name: 'created_at')
-          DateTime createdAt,
-      @JsonKey(name: 'changed_at')
-      @TimeStampConverter()
-          DateTime changedAt,
+      @TimeStampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'changed_at') @TimeStampConverter() DateTime changedAt,
       String id,
       Importance importance,
-      @BoolOrIntToBoolConverter()
-      @JsonKey(name: 'done')
-          bool isDone,
-      @TimeStampOrNullConverter()
-          DateTime? deadline,
+      @BoolOrIntToBoolConverter() @JsonKey(name: 'done') bool isDone,
+      @TimeStampOrNullConverter() DateTime? deadline,
       String? color,
-      @JsonKey(name: 'last_updated_by')
-          String lastUpdatedBy,
+      @JsonKey(name: 'last_updated_by') String lastUpdatedBy,
       @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
-          bool? deleted});
+      bool? deleted});
 }
 
 /// @nodoc
@@ -244,23 +228,19 @@ class _$_Task implements _Task {
       {required this.text,
       @TimeStampConverter()
       @JsonKey(name: 'created_at')
-          required this.createdAt,
+      required this.createdAt,
       @JsonKey(name: 'changed_at')
       @TimeStampConverter()
-          required this.changedAt,
+      required this.changedAt,
       this.id = '',
       this.importance = Importance.none,
-      @BoolOrIntToBoolConverter()
-      @JsonKey(name: 'done')
-          this.isDone = false,
-      @TimeStampOrNullConverter()
-          this.deadline,
+      @BoolOrIntToBoolConverter() @JsonKey(name: 'done') this.isDone = false,
+      @TimeStampOrNullConverter() this.deadline,
       this.color,
-      @JsonKey(name: 'last_updated_by')
-          this.lastUpdatedBy = 'example',
+      @JsonKey(name: 'last_updated_by') this.lastUpdatedBy = 'example',
       @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
-          this.deleted = false});
+      this.deleted = false});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
 
@@ -348,23 +328,19 @@ abstract class _Task implements Task {
       {required final String text,
       @TimeStampConverter()
       @JsonKey(name: 'created_at')
-          required final DateTime createdAt,
+      required final DateTime createdAt,
       @JsonKey(name: 'changed_at')
       @TimeStampConverter()
-          required final DateTime changedAt,
+      required final DateTime changedAt,
       final String id,
       final Importance importance,
-      @BoolOrIntToBoolConverter()
-      @JsonKey(name: 'done')
-          final bool isDone,
-      @TimeStampOrNullConverter()
-          final DateTime? deadline,
+      @BoolOrIntToBoolConverter() @JsonKey(name: 'done') final bool isDone,
+      @TimeStampOrNullConverter() final DateTime? deadline,
       final String? color,
-      @JsonKey(name: 'last_updated_by')
-          final String lastUpdatedBy,
+      @JsonKey(name: 'last_updated_by') final String lastUpdatedBy,
       @NullOrIntToBoolConverter()
       @JsonKey(includeToJson: false)
-          final bool? deleted}) = _$_Task;
+      final bool? deleted}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 

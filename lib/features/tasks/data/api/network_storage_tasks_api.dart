@@ -1,6 +1,6 @@
-import 'package:todo_list_app/core/error/exceptions.dart';
-import 'package:todo_list_app/core/managers/network_manager.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/network_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/domain/error/exceptions.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';

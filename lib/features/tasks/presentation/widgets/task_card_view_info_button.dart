@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:todo_list_app/core/managers/navigation_manager.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class TaskCardViewInfoButton extends StatelessWidget {

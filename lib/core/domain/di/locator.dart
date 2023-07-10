@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_list_app/core/managers/navigation_manager.dart';
-import 'package:todo_list_app/core/managers/network_manager.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
+import 'package:todo_list_app/core/data/managers/network_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
@@ -29,7 +29,7 @@ Future<void> _initApis() async {
   final localStorage = LocalStorageTasksApi();
   await localStorage.init();
   GetIt.I.registerSingleton<LocalTasksApi>(localStorage);
-  
+
   final shared = await SharedPreferences.getInstance();
   GetIt.I.registerSingleton<SharedPreferences>(shared);
 

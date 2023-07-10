@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
@@ -73,7 +73,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     emit(state.copyWith(tasks: updatedTasks));
     logger.info('Update task in temp array');
-    
+
     try {
       await _tasksRepository.updateTask(event.task);
       logger.info('Update task in storages: ${event.task}');
@@ -91,7 +91,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     emit(state.copyWith(
         tasks: updatedTasks.where((t) => t != null).cast<Task>().toList()));
     logger.info('Delete task from temp array');
-    
+
     try {
       await _tasksRepository.deleteTask(event.task.id);
       logger.info('Delete task from storages: ${event.task}');

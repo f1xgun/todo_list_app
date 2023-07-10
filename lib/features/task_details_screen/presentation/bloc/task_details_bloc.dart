@@ -36,7 +36,7 @@ class TaskDetailsBloc extends Bloc<TaskDetailsEvent, TaskDetailsState> {
 
   Future<void> _onTaskDetailsDeleteDeadline(
       TaskDetailsDeleteDeadline event, Emitter<TaskDetailsState> emit) async {
-    emit(state.copyWith(
-        currentTask: state.currentTask.copyWith(deleted: true)));
+    emit(
+        state.copyWith(currentTask: state.currentTask.copyWith(deleted: true)));
   }
 }

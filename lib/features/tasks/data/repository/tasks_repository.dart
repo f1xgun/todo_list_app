@@ -1,4 +1,4 @@
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';

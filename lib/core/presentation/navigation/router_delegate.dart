@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/core/navigation/navigation_state.dart';
+import 'package:todo_list_app/core/presentation/navigation/navigation_state.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/home/presentation/unknown_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
