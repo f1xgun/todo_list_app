@@ -46,7 +46,10 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                         Text(
                           AppLocalizations.of(context)!.appTitle,
                           style: text.titleLarge?.copyWith(
-                            fontSize: 20 + 12 * percentOfShrinkOffset,
+                            fontSize: max(
+                                (text.titleLarge?.fontSize ?? 20) *
+                                    percentOfShrinkOffset,
+                                20),
                           ),
                         ),
                         if (percentOfShrinkOffset > 0)
@@ -61,7 +64,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                               ),
                               style: text.bodyMedium?.copyWith(
                                 color: themeData.hintColor,
-                                fontSize: 16 * percentOfShrinkOffset,
+                                fontSize: (text.bodyMedium?.fontSize ?? 16) *
+                                    percentOfShrinkOffset,
                               ),
                             ),
                           ),

@@ -22,6 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDarkTheme = brightness == Brightness.dark;
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
 
     return AppTheme(
       colors: isDarkTheme ? darkPalette : lightPalette,
@@ -35,7 +36,9 @@ class MainApp extends StatelessWidget {
           environment: enviroment,
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            theme: AppStyle(isDarkTheme ? darkPalette : lightPalette).themeData,
+            theme:
+                AppStyle(isDarkTheme ? darkPalette : lightPalette, shortestSide)
+                    .themeData,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             onGenerateTitle: (context) =>

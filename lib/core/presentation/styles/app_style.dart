@@ -4,8 +4,9 @@ import 'package:todo_list_app/core/presentation/styles/text_style.dart';
 
 class AppStyle {
   final ColorPalette colorPalette;
+  final double shortestSide;
 
-  AppStyle(this.colorPalette);
+  AppStyle(this.colorPalette, this.shortestSide);
 
   ThemeData get themeData => ThemeData(
         brightness: colorPalette.brightness,
@@ -17,5 +18,5 @@ class AppStyle {
         disabledColor: colorPalette.colorLabelDisable,
       );
 
-  AppTextStyles get appTextStyles => AppTextStyles(colorPalette: colorPalette);
+  AppTextStyles get appTextStyles => AppTextStyles(colorPalette: colorPalette, shortestSide: shortestSide);
 }
