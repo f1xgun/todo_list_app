@@ -48,3 +48,8 @@ app.*.map.json
 
 # exclude the API key from version control
 env.g.dart
+
+# firebase keys
+google-services.json
+GoogleService-Info.plist
+firebase_app_id_file.json

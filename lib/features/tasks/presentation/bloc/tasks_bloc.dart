@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';

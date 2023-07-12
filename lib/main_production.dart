@@ -8,18 +8,24 @@ import 'package:todo_list_app/core/utils/error_handler.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 
 Future<void> main() async {
-  await runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await initDependencies();
-    initLogger();
+  await runZonedGuarded(
+    () async {
+      initLogger();
+      await initDependencies();
+      initCrashlytics();
 
-    logger.info('Start main');
+      logger.info('Start main');
 
-    ErrorHandler.init();
-    runApp(
-      MainApp(
-        enviroment: Environment.production,
-      ),
-    );
-  }, ErrorHandler.recordError);
+      ErrorHandler.init(Environment.production);
+      runApp(
+        MainApp(
+          enviroment: Environment.production,
+        ),
+      );
+    },
+    (error, stackTrace) {
+      ErrorHandler.recordError(error, stackTrace,
+          environment: Environment.production);
+    },
+  );
 }

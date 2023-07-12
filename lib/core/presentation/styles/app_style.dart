@@ -18,5 +18,6 @@ class AppStyle {
         disabledColor: colorPalette.colorLabelDisable,
       );
 
-  AppTextStyles get appTextStyles => AppTextStyles(colorPalette: colorPalette, shortestSide: shortestSide);
+  AppTextStyles get appTextStyles =>
+      AppTextStyles(colorPalette: colorPalette, shortestSide: shortestSide);
 }

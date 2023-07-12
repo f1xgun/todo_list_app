@@ -15,7 +15,7 @@ Future<void> main() async {
 
     logger.info('Start main');
 
-    ErrorHandler.init();
+    ErrorHandler.init(Environment.development);
     runApp(
       MainApp(enviroment: Environment.development),
     );
