@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/home/presentation/widgets/home_screen_new_task_field.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/task_card.dart';
 
 class HomeScreenTaskList extends StatelessWidget {
-  const HomeScreenTaskList({super.key});
+  const HomeScreenTaskList({required this.onTaskTap, super.key});
+
+  final void Function(String taskId) onTaskTap;
 
   @override
   Widget build(BuildContext context) {
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final colors = AppTheme.of(context).colors;
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, state) {
       if (state.status == TasksStatus.loading) {
         return const SliverToBoxAdapter(
@@ -21,7 +24,7 @@ class HomeScreenTaskList extends StatelessWidget {
       } else if (state.status == TasksStatus.failure) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Ошибка загрузки задач'),
+            content: Text(AppLocalizations.of(context)!.loadTasksError),
             backgroundColor: colors.colorRed,
           ),
         );
@@ -37,7 +40,7 @@ class HomeScreenTaskList extends StatelessWidget {
         return SliverToBoxAdapter(
           child: Card(
             color: colors.colorBackSecondary,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -51,6 +54,7 @@ class HomeScreenTaskList extends StatelessWidget {
                 } else {
                   return TaskCard(
                     task: tasks[index],
+                    onTap: onTaskTap,
                   );
                 }
               },

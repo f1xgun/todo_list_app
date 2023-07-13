@@ -1,62 +1,58 @@
-import 'package:todo_list_app/core/managers/network_manager.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
-import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
-import 'package:todo_list_app/features/tasks/data/api/tasks_api.dart';
-import 'package:todo_list_app/features/tasks/domain/response_data.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
+import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
+import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 class TasksRepository {
-  TasksRepository({
-    required NetworkManager networkManager,
-    required PersistenceManager persistenceManager,
-    required this.localStorage,
-  }) : _persistenceManager = persistenceManager {
-    networkStorage = NetworkStorageTasksApi(
-        persistenceManager: persistenceManager, networkManager: networkManager);
-  }
+  TasksRepository(
+      {required persistenceManager,
+      required networkStorage,
+      required localStorage})
+      : _persistenceManager = persistenceManager,
+        _networkStorage = networkStorage,
+        _localStorage = localStorage;
 
   final PersistenceManager _persistenceManager;
-  final TasksApi localStorage;
-  late final NetworkStorageTasksApi networkStorage;
+  final LocalTasksApi _localStorage;
+  final NetworkTasksApi _networkStorage;
 
-  Future<bool> checkChanges() async {
-    final networkStorageTasks = (await networkStorage.getTasks()).data ?? [];
-    final localTasks = await localStorage.getTasks();
-    return !networkStorageTasks.every(localTasks.contains) ||
-        !localTasks.every(networkStorageTasks.contains);
+  Future<bool> checkChanges(List<Task> local, List<Task> network) async {
+    return !network.every(local.contains) ||
+        !local.every(network.contains);
   }
 
-  Future<void> syncStorages() async {
-    final network = await networkStorage.getTasks();
+  Future<List<Task>> syncStorages() async {
+    final network = await _networkStorage.getTasks();
+    final localTasks = await getLocalTasks();
     if (await _persistenceManager.getTasksRevision() != network.revision ||
-        await checkChanges()) {
+        await checkChanges(localTasks, network.data ?? [])) {
       await _persistenceManager.saveTasksRevision(
           revision: network.revision ?? 0);
-      final localTasks = await getLocalTasks();
-
       if (network.data != null) {
         final localTasksMap = <String, Task>{
           for (var task in localTasks) task.id: task
         };
         for (final task in network.data!) {
           if (!localTasksMap.containsKey(task.id)) {
-            await localStorage.addTask(task);
+            await _localStorage.addTask(task);
           } else {
             final tempTask = localTasksMap[task.id];
             if (tempTask!.changedAt.isBefore(task.changedAt)) {
-              await localStorage.updateTask(task);
+              await _localStorage.updateTask(task);
             } else if (tempTask.deleted != null && tempTask.deleted!) {
-              await localStorage.deleteTask(tempTask.id);
+              await _localStorage.deleteTask(tempTask.id);
             }
           }
         }
       }
-      await networkStorage.syncTasks(await localStorage.getTasks());
+      await _networkStorage.syncTasks(await _localStorage.getTasks());
     }
+    return _localStorage.getTasks();
   }
 
   Future<List<Task>> getLocalTasks() async {
-    final localTasks = await localStorage.getTasks();
+    final localTasks = await _localStorage.getTasks();
     return localTasks;
   }
 
@@ -67,41 +63,41 @@ class TasksRepository {
 
   Future<Task> getTask(String id) async {
     await syncStorages();
-    final localTask = await localStorage.getTask(id);
+    final localTask = await _localStorage.getTask(id);
     return localTask;
   }
 
   Future<Task> addTask(Task task) async {
-    final localTask = await localStorage.addTask(task);
-    final ResponseData response = await networkStorage.addTask(task);
+    final localTask = await _localStorage.addTask(task);
+    final ResponseData response = await _networkStorage.addTask(task);
     if (response.status == 400) {
       await syncStorages();
-      await networkStorage.addTask(task);
+      await _networkStorage.addTask(task);
     }
     return localTask;
   }
 
   Future<Task> updateTask(Task task) async {
-    final localTask = await localStorage.updateTask(task);
-    final ResponseData response = await networkStorage.updateTask(task);
+    final localTask = await _localStorage.updateTask(task);
+    final ResponseData response = await _networkStorage.updateTask(task);
     if (response.status == 400) {
       await syncStorages();
-      await networkStorage.updateTask(task);
+      await _networkStorage.updateTask(task);
     }
     return localTask;
   }
 
   Future<void> deleteTask(String id) async {
-    await localStorage.deleteTaskWithoutInternet(id);
-    final ResponseData response = await networkStorage.deleteTask(id);
+    await _localStorage.deleteTaskWithoutInternet(id);
+    final ResponseData response = await _networkStorage.deleteTask(id);
     ResponseData? responseAfterSync;
     if (response.status == 400) {
       await syncStorages();
-      responseAfterSync = await networkStorage.deleteTask(id);
+      responseAfterSync = await _networkStorage.deleteTask(id);
     }
     if (response.status == 200 ||
         (responseAfterSync != null && responseAfterSync.status == 200)) {
-      await localStorage.deleteTask(id);
+      await _localStorage.deleteTask(id);
     }
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view_text_title.dart';
 
 class TaskCardViewText extends StatelessWidget {
@@ -13,7 +12,7 @@ class TaskCardViewText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    final colors = context.read<ThemeBloc>().state.colorPalette;
+    final colors = AppTheme.of(context).colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

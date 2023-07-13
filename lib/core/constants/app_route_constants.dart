@@ -1,4 +1,4 @@
 class AppRoutes {
-  static const homeRoute = '/home';
-  static const taskDetailRoute = '/task_details';
+  static const homeRoute = '';
+  static const taskDetailsRoute = 'task_details';
 }

@@ -2,19 +2,19 @@ import 'package:todo_list_app/core/error/exceptions.dart';
 import 'package:todo_list_app/core/managers/network_manager.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
-import 'package:todo_list_app/features/tasks/domain/response_data.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
+import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
-class NetworkStorageTasksApi {
+class NetworkStorageTasksApi implements NetworkTasksApi {
   final NetworkManager _networkManager;
   final PersistenceManager _persistenceManager;
 
-  NetworkStorageTasksApi(
-      {required NetworkManager networkManager,
-      required PersistenceManager persistenceManager})
+  NetworkStorageTasksApi({required networkManager, required persistenceManager})
       : _networkManager = networkManager,
         _persistenceManager = persistenceManager;
 
+  @override
   Future<ResponseData<Task>> addTask(Task task) async {
     final requestData = <String, dynamic>{'element': task.toJson()};
     try {
@@ -34,7 +34,7 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Add task to network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Add task to network storage error: $e');
       return ResponseData.error(400);
@@ -44,6 +44,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<Task>> deleteTask(String id) async {
     try {
       final response = await _networkManager.delete('/list/$id');
@@ -62,7 +63,7 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Delete task from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Delete task from network storage error: $e');
       return ResponseData.error(400);
@@ -72,6 +73,7 @@ class NetworkStorageTasksApi {
     }
   }
 
+  @override
   Future<ResponseData<Task>> getTask(String id) async {
     try {
       final response = await _networkManager.get('/list/$id');
@@ -92,16 +94,17 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Get task from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Get task from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Get task from network storage error: $e');
       return ResponseData.error(500);
     }
   }
 
+  @override
   Future<ResponseData<List<Task>>> getTasks() async {
     try {
       final response = await _networkManager.get('/list');
@@ -125,16 +128,17 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Get tasks from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Get tasks from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Get tasks from network storage error: $e');
       return ResponseData.error(500);
     }
   }
 
+  @override
   Future<ResponseData<Task>> updateTask(Task task) async {
     final requestData = {'element': task.toJson()};
     try {
@@ -158,16 +162,17 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Update task in network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Update task in network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Update task in network storage error: $e');
       return ResponseData.error(500);
     }
   }
 
+  @override
   Future<ResponseData<List<Task>>> syncTasks(List<Task> tasks) async {
     final requestData = <String, dynamic>{
       'list': tasks.map((task) => task.toJson()).toList(),
@@ -195,10 +200,10 @@ class NetworkStorageTasksApi {
       return ResponseData.error(503);
     } on ResponseException catch (e) {
       logger.info('Sync tasks from network storage error: $e');
-      return ResponseData.error(400);
+      return ResponseData.error(404);
     } on UnknownNetworkException catch (e) {
       logger.info('Sync tasks from network storage error: $e');
-      return ResponseData.error(500);
+      return ResponseData.error(400);
     } on Exception catch (e) {
       logger.info('Sync tasks from network storage error: $e');
       return ResponseData.error(500);

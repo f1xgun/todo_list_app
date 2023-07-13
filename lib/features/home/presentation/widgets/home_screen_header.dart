@@ -3,13 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/theme/bloc/theme_bloc.dart';
+import 'package:todo_list_app/core/styles/app_theme.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
   const HomeScreenHeaderDelegate();
 
-  double get expandedHeight => 200;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -17,9 +16,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
     final text = themeData.textTheme;
     final diff = expandedHeight - kToolbarHeight;
     final k = (diff - shrinkOffset) / diff;
-    // ignore: omit_local_variable_types
     final double percentOfShrinkOffset = max(k, 0);
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final colors = AppTheme.of(context).colors;
 
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
@@ -55,23 +53,16 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                           Padding(
                             padding:
                                 EdgeInsets.only(top: 6 * percentOfShrinkOffset),
-                            child: BlocBuilder<TasksBloc, TasksState>(
-                              builder: (context, state) {
-                                return Text(
-                                  AppLocalizations.of(context)!
-                                      .tasksCompletedCount(
-                                    BlocProvider.of<TasksBloc>(context)
-                                        .state
-                                        .tasks
-                                        .where((element) => element.isDone)
-                                        .length,
-                                  ),
-                                  style: text.bodyMedium?.copyWith(
-                                    color: themeData.hintColor,
-                                    fontSize: 16 * percentOfShrinkOffset,
-                                  ),
-                                );
-                              },
+                            child: Text(
+                              AppLocalizations.of(context)!.tasksCompletedCount(
+                                state.tasks
+                                    .where((element) => element.isDone)
+                                    .length,
+                              ),
+                              style: text.bodyMedium?.copyWith(
+                                color: themeData.hintColor,
+                                fontSize: 16 * percentOfShrinkOffset,
+                              ),
                             ),
                           ),
                       ],
@@ -83,9 +74,7 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(
-                          BlocProvider.of<TasksBloc>(context)
-                                  .state
-                                  .completedVisible
+                          state.completedVisible
                               ? Icons.visibility_off
                               : Icons.visibility,
                           size: 24,
@@ -107,6 +96,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
       },
     );
   }
+
+  double get expandedHeight => 200;
 
   @override
   double get maxExtent => expandedHeight;

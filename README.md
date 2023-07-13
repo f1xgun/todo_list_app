@@ -1,6 +1,11 @@
 # TODO List App
 
-Todo List App - приложение для создания и выполнения задач. [Скачать APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.1.0/app-release.apk)
+Todo List App - приложение для создания и выполнения задач. [Скачать APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.2.0/app-release.apk")
+
+## Deeplinks
+https://todo - На главную страницу
+
+https://todo/task_details - На страницу создания новой таски
 
 ## Скриншоты
 <img src="https://github.com/f1xgun/todo_list_app/assets/88651829/2ac4aa3a-1f37-4f2c-8325-c572f766cf19" width="300">
@@ -26,6 +31,8 @@ Todo List App - приложение для создания и выполнен
 
 **LocalStorage:** [`shared_preferences`](https://pub.dev/packages/shared_preferences) + [`sqflite`](https://pub.dev/packages/sqflite)
 
+**DI:** [`get_it`](https://pub.dev/packages/get_it)
+
 ## Реализованные фичи
  - Логгирование
  - Локализация
@@ -40,6 +47,10 @@ Todo List App - приложение для создания и выполнен
  - Отображение количества выполненных дел
  - Возможность сохранения тасок на сервере + хранение локально в базе данных и синхронизация при возмножности
  - Работа с данными без ожидания выполнения действий, связанных с данными в хранилищах
+ - Unit, integration tests
+ - DI
+ - Navigator 2.0
+ - Deeplinks
 
 ## Архитектура
 В проекте используется feature-first структура.

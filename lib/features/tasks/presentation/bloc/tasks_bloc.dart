@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
-import 'package:todo_list_app/features/tasks/domain/task_model.dart';
+import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
 part 'tasks_event.dart';
 part 'tasks_state.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc(
-      {required TasksRepository tasksRepository,
-      required PersistenceManager persistenceManager})
-      : _tasksRepository = tasksRepository,
-        _persistenceManager = persistenceManager,
+  TasksBloc()
+      : _tasksRepository = GetIt.I<TasksRepository>(),
+        _persistenceManager = GetIt.I<PersistenceManager>(),
         super(const TasksState()) {
     on<LoadTasks>(_onLoadTasks);
     on<AddTask>(_onAddTask);

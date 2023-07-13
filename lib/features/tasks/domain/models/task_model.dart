@@ -96,7 +96,7 @@ class Task extends Equatable {
 
   @override
   String toString() {
-    return 'Task { id: $id, text: $text, importance: $importance, isDone: $isDone, deadline: $deadline, color: $color, createdAt: $createdAt, changedAt: $changedAt, lastUpdatedBy: $lastUpdatedBy }';
+     return 'Task { id: $id, text: $text, importance: $importance, isDone: $isDone, deadline: $deadline, color: $color, createdAt: $createdAt, changedAt: $changedAt, lastUpdatedBy: $lastUpdatedBy }';
   }
 
   String toStringWithTypes() {
@@ -109,12 +109,12 @@ class TimeStampConverter implements JsonConverter<DateTime, int> {
 
   @override
   DateTime fromJson(int timestamp) {
-    return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   }
 
   @override
   int toJson(DateTime date) {
-    return date.millisecondsSinceEpoch;
+    return date.millisecondsSinceEpoch ~/ 1000;
   }
 }
 
@@ -125,12 +125,12 @@ class TimeStampOrNullConverter implements JsonConverter<DateTime?, int?> {
   DateTime? fromJson(int? timestamp) {
     return timestamp == null
         ? null
-        : DateTime.fromMillisecondsSinceEpoch(timestamp);
+        : DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   }
 
   @override
   int? toJson(DateTime? date) {
-    return date?.millisecondsSinceEpoch;
+    return date == null ? null : date.millisecondsSinceEpoch ~/ 1000;
   }
 }
 

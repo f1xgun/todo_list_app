@@ -17,9 +17,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.6
+  get_it: ^7.6.0
   intl: any
   json_annotation: ^4.8.1
   logging: ^1.2.0
+  mockito: ^5.4.2
   path_provider: ^2.0.15
   shared_preferences: ^2.1.2
   sqflite: ^2.2.8
@@ -30,6 +32,8 @@ dev_dependencies:
   envied_generator: ^0.3.0+3
   flutter_lints: ^2.0.0
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   json_serializable: ^6.7.0
 
