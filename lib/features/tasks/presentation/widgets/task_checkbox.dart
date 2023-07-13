@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
+import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/features/tasks/domain/enums/importance.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 
@@ -38,6 +39,7 @@ class TaskCheckbox extends StatelessWidget {
           checkColor: colors.colorBackPrimary,
           onChanged: (_) {
             onChanged(!value);
+            AnalyticsLogger.doneTask(task);
           },
         ),
       ),

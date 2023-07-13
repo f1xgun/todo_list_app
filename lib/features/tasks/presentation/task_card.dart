@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
+import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/widgets/task_card_view.dart';
@@ -32,10 +33,13 @@ class _TaskCardState extends State<TaskCard> {
         switch (direction) {
           case DismissDirection.endToStart:
             context.read<TasksBloc>().add(DeleteTask(task: widget.task));
+            AnalyticsLogger.deleteTask(widget.task);
             return true;
           case DismissDirection.startToEnd:
             context.read<TasksBloc>().add(UpdateTask(
                 task: widget.task.copyWith(isDone: !widget.task.isDone)));
+            AnalyticsLogger.doneTask(
+                widget.task.copyWith(isDone: !widget.task.isDone));
             return false;
           default:
             return false;
