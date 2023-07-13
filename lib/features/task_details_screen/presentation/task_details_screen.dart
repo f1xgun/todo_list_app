@@ -42,11 +42,13 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     if (taskDetailBloc.state.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
           task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
-      AnalyticsLogger.addTask(taskDetailBloc.state.currentTask.copyWith(text: taskText));
+      AnalyticsLogger.addTask(
+          taskDetailBloc.state.currentTask.copyWith(text: taskText));
     } else {
       context.read<TasksBloc>().add(UpdateTask(
           task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
-      AnalyticsLogger.updateTask(taskDetailBloc.state.currentTask.copyWith(text: taskText));
+      AnalyticsLogger.updateTask(
+          taskDetailBloc.state.currentTask.copyWith(text: taskText));
     }
   }
 

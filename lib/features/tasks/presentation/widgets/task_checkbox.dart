@@ -24,17 +24,16 @@ class TaskCheckbox extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: !value && task.importance == Importance.highPriority
-              ? colors.colorRed.withOpacity(0.16)
+              ? colors.colorImportantTask.withOpacity(0.16)
               : Colors.transparent,
         ),
         height: 18,
         width: 18,
-        // margin: const EdgeInsets.only(right: 15),
         child: Checkbox(
           value: value,
           activeColor: colors.colorGreen,
           fillColor: !value && task.importance == Importance.highPriority
-              ? MaterialStateProperty.all(colors.colorRed)
+              ? MaterialStateProperty.all(colors.colorImportantTask)
               : null,
           checkColor: colors.colorBackPrimary,
           onChanged: (_) {

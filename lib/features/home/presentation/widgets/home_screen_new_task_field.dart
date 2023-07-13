@@ -22,8 +22,7 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
         : controller.text;
     final task = Task.withDefaultId(
         text: taskText, createdAt: DateTime.now(), changedAt: DateTime.now());
-    context.read<TasksBloc>().add(AddTask(
-        task: task));
+    context.read<TasksBloc>().add(AddTask(task: task));
     AnalyticsLogger.addTask(task);
     controller.text = '';
   }

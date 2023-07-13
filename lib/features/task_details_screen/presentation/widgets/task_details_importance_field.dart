@@ -64,7 +64,7 @@ class ImportanceText extends StatelessWidget {
       Importance.highPriority => Text(
           AppLocalizations.of(context)!.importanceHighPriority,
           style: text.titleSmall?.copyWith(
-            color: colors.colorRed,
+            color: colors.colorImportantTask,
           ),
         )
     };
@@ -92,7 +92,7 @@ class PopupImportanceItem extends StatelessWidget {
       Importance.highPriority => Text(
           AppLocalizations.of(context)!.importanceHighPriority,
           style: text.bodyMedium?.copyWith(
-            color: colors.colorRed,
+            color: colors.colorImportantTask,
           ),
         )
     };

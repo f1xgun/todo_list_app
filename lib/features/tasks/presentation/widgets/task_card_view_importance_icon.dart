@@ -26,7 +26,7 @@ class TaskCardViewImportanceIcon extends StatelessWidget {
       Importance.highPriority => SvgPicture.asset(
           'assets/high_priority_importance.svg',
           colorFilter: ColorFilter.mode(
-            colors.colorRed,
+            colors.colorImportantTask,
             BlendMode.srcIn,
           ),
         ),

@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_list_app/core/config/firebase_config_repository.dart';
 import 'package:todo_list_app/core/config/firebase_options.dart';
 import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/data/managers/network_manager.dart';
@@ -65,7 +67,15 @@ Future<void> _initFirebase() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  logger.info('Firebase initialized');
+  logger
+    ..info('Firebase initialized')
+    ..info('Firebase Remote Config initialization started');
+  GetIt.I.registerLazySingleton<FirebaseRemoteConfig>(
+      () => FirebaseRemoteConfig.instance);
+  final config = FirebaseConfigRepository(GetIt.I<FirebaseRemoteConfig>());
+  await config.init();
+  GetIt.I.registerLazySingleton<FirebaseConfigRepository>(() => config);
+  logger.info('Firebase Remote config initialized');
 }
 
 void initCrashlytics() {

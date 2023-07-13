@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_list_app/core/config/firebase_config_repository.dart';
+import 'package:todo_list_app/core/domain/converters/hex_color_converter.dart';
 
 class ColorPalette {
   ColorPalette.light({
@@ -17,7 +20,9 @@ class ColorPalette {
     required this.colorBackPrimary,
     required this.colorBackSecondary,
     required this.colorBackElevated,
-  }) : brightness = Brightness.light;
+  })  : brightness = Brightness.light,
+        colorImportantTask = getColorFromHex(
+            GetIt.I<FirebaseConfigRepository>().importantTaskColor);
 
   ColorPalette.dark({
     required this.colorSupportSeparator,
@@ -35,7 +40,9 @@ class ColorPalette {
     required this.colorBackPrimary,
     required this.colorBackSecondary,
     required this.colorBackElevated,
-  }) : brightness = Brightness.dark;
+  })  : brightness = Brightness.dark,
+        colorImportantTask = getColorFromHex(
+            GetIt.I<FirebaseConfigRepository>().importantTaskColor);
 
   final Brightness brightness;
 
@@ -57,4 +64,6 @@ class ColorPalette {
   final Color colorBackPrimary;
   final Color colorBackSecondary;
   final Color colorBackElevated;
+
+  final Color colorImportantTask;
 }
