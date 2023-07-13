@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/core/domain/enums/environments.dart';
 import 'package:todo_list_app/core/presentation/navigation/route_information_parser.dart';
 import 'package:todo_list_app/core/presentation/styles/app_style.dart';
@@ -10,6 +11,7 @@ import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/core/presentation/styles/palettes/dark_palette.dart';
 import 'package:todo_list_app/core/presentation/styles/palettes/light_palette.dart';
 import 'package:todo_list_app/core/presentation/widgets/environment_banner.dart';
+import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class MainApp extends StatelessWidget {
@@ -30,7 +32,10 @@ class MainApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<TasksBloc>(
-            create: (context) => TasksBloc()..add(const LoadTasks()),
+            create: (context) => TasksBloc(
+              tasksRepository: GetIt.I<TasksRepository>(),
+              persistenceManager: GetIt.I<PersistenceManager>(),
+            )..add(const LoadTasks()),
           ),
         ],
         child: EnvironmentBanner(
