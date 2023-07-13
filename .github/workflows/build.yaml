@@ -63,7 +63,7 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Start formatter
-        run: flutter format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
   test:
     name: 'Test before build and deploy'
@@ -121,7 +121,7 @@ jobs:
         run: flutter test
 
       - name: Run integration tests
-        run: flutter integration_test
+        run: flutter test integration_test
 
   build_anroid:
     name: Build and Deploy Android
