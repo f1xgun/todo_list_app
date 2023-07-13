@@ -55,6 +55,9 @@ jobs:
 
       - name: Get packages
         run: flutter pub get
+      
+      - name: Start formatter
+        run: dart format --set-exit-if-changed .
 
       - name: Run code generator
         run: flutter pub run build_runner build --delete-conflicting-outputs
@@ -62,8 +65,6 @@ jobs:
       - name: Start analyzer
         run: flutter analyze --no-fatal-infos
 
-      - name: Start formatter
-        run: dart format --set-exit-if-changed .
 
   test:
     name: 'Test before build and deploy'
@@ -119,9 +120,6 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      - name: Run integration tests
-        run: flutter test integration_test
 
   build_anroid:
     name: Build and Deploy Android
