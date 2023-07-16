@@ -21,8 +21,9 @@ class ColorPalette {
     required this.colorBackSecondary,
     required this.colorBackElevated,
   })  : brightness = Brightness.light,
-        colorImportantTask = getColorFromHex(
-            GetIt.I<FirebaseConfigRepository>().importantTaskColor);
+        colorImportantTask = getColorFromHex(GetIt.I<FirebaseConfigRepository>()
+            .importantTaskColorNotifier
+            .value);
 
   ColorPalette.dark({
     required this.colorSupportSeparator,
@@ -41,8 +42,9 @@ class ColorPalette {
     required this.colorBackSecondary,
     required this.colorBackElevated,
   })  : brightness = Brightness.dark,
-        colorImportantTask = getColorFromHex(
-            GetIt.I<FirebaseConfigRepository>().importantTaskColor);
+        colorImportantTask = getColorFromHex(GetIt.I<FirebaseConfigRepository>()
+            .importantTaskColorNotifier
+            .value);
 
   final Brightness brightness;
 
@@ -65,5 +67,5 @@ class ColorPalette {
   final Color colorBackSecondary;
   final Color colorBackElevated;
 
-  final Color colorImportantTask;
+  Color colorImportantTask;
 }
