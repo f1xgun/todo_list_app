@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';
@@ -23,7 +24,7 @@ class _HomeScreenNewTaskFieldState extends State<HomeScreenNewTaskField> {
     final task = Task.withDefaultId(
         text: taskText, createdAt: DateTime.now(), changedAt: DateTime.now());
     context.read<TasksBloc>().add(AddTask(task: task));
-    AnalyticsLogger.addTask(task);
+    GetIt.I<AnalyticsLogger>().addTask(task);
     controller.text = '';
   }
 

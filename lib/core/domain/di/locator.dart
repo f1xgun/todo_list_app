@@ -9,6 +9,8 @@ import 'package:todo_list_app/core/config/firebase_config_repository.dart';
 import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/data/managers/network_manager.dart';
 import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/presentation/navigation/router_delegate.dart';
+import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/tasks/data/api/local_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
@@ -20,6 +22,8 @@ import 'package:todo_list_app/firebase_options.dart';
 
 Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initLogger();
+  GetIt.I.registerLazySingleton<AnalyticsLogger>(AnalyticsLogger.new);
   await _initFirebase();
 
   await _initApis();
@@ -34,7 +38,12 @@ void _initManagers() {
   GetIt.I.registerLazySingleton<NetworkManager>(
       () => NetworkManager(persistenceManager: GetIt.I<PersistenceManager>()));
 
-  GetIt.I.registerLazySingleton<NavigationManager>(NavigationManager.new);
+  GetIt.I.registerLazySingleton<NavigationManager>(
+    () => NavigationManager(
+      analyticsLogger: GetIt.I<AnalyticsLogger>(),
+      routerDelegate: CustomRouterDelegate(),
+    ),
+  );
 }
 
 Future<void> _initApis() async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/bloc/task_details_bloc.dart';
@@ -42,12 +43,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     if (taskDetailBloc.state.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
           task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
-      AnalyticsLogger.addTask(
+      GetIt.I<AnalyticsLogger>().addTask(
           taskDetailBloc.state.currentTask.copyWith(text: taskText));
     } else {
       context.read<TasksBloc>().add(UpdateTask(
           task: taskDetailBloc.state.currentTask.copyWith(text: taskText)));
-      AnalyticsLogger.updateTask(
+      GetIt.I<AnalyticsLogger>().updateTask(
           taskDetailBloc.state.currentTask.copyWith(text: taskText));
     }
   }

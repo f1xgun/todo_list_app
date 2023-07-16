@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
 import 'package:todo_list_app/core/utils/logger.dart';
 
@@ -26,7 +28,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
               key: const ValueKey('saveTaskButton'),
               onPressed: () {
                 saveTask(context);
-                Navigator.pop(context);
+                GetIt.I<NavigationManager>().pop(context);
                 logger.info('Close task details screen with saving task');
               },
               style: TextButton.styleFrom(

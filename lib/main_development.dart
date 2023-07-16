@@ -11,7 +11,6 @@ Future<void> main() async {
   await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await initDependencies();
-    initLogger();
 
     logger.info('Start main');
 

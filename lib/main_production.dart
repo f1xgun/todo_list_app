@@ -10,7 +10,6 @@ import 'package:todo_list_app/core/utils/logger.dart';
 Future<void> main() async {
   await runZonedGuarded(
     () async {
-      initLogger();
       await initDependencies();
       initCrashlytics();
 
