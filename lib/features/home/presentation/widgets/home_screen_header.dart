@@ -90,8 +90,9 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                           context
                               .read<TasksBloc>()
                               .add(const ToggleVisibilityCompletedFilter());
-                          GetIt.I<AnalyticsLogger>().toggleVisibilityTasksFilter(
-                              state.completedVisible);
+                          GetIt.I<AnalyticsLogger>()
+                              .toggleVisibilityTasksFilter(
+                                  state.completedVisible);
                         },
                       ),
                     ),
