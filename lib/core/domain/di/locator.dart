@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_app/core/config/firebase_config_repository.dart';
-import 'package:todo_list_app/core/config/firebase_options.dart';
 import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/data/managers/network_manager.dart';
 import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
@@ -16,6 +15,8 @@ import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
+
+import 'package:todo_list_app/firebase_options.dart';
 
 Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
