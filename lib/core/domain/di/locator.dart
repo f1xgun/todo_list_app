@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_app/core/config/firebase_config_repository.dart';
-import 'package:todo_list_app/core/config/firebase_options.dart';
+import 'package:todo_list_app/firebase_options.dart';
 import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
 import 'package:todo_list_app/core/data/managers/network_manager.dart';
 import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
