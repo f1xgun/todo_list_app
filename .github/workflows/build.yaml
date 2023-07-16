@@ -35,6 +35,16 @@ jobs:
       - name: Get packages
         run: flutter pub get
 
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
+
       - name: Start formatter
         run: dart format --set-exit-if-changed .
 
@@ -74,6 +84,16 @@ jobs:
 
       - name: Run code generator
         run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
 
       - name: Run tests
         run: flutter test
@@ -115,11 +135,11 @@ jobs:
         run: curl -sL https://firebase.tools | bash
       - run: dart pub global activate flutterfire_cli
       - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
-      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }} 
-             --project="firebase-todo-list-app" 
-             --platforms="android" 
-             --android-package-name="com.example.todo_list_app" 
-             --yes
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
 
       - name: Build APK
         run: flutter build apk -t lib/main_production.dart
@@ -157,32 +177,21 @@ jobs:
           echo "TASKS_HOST=${{ secrets.TASKS_HOST }}" >> $GITHUB_ENV
           echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
 
-          echo "FIREBASE_WEB_API_KEY=${{ secrets.FIREBASE_WEB_API_KEY }}" >> $GITHUB_ENV
-          echo "FIREBASE_WEB_APP_ID=${{ secrets.FIREBASE_WEB_APP_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_WEB_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_WEB_MESSAGING_SENDER_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_WEB_PROJECT_ID=${{ secrets.FIREBASE_WEB_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_WEB_AUTH_DOMAIN=${{ secrets.FIREBASE_WEB_AUTH_DOMAIN }}" >> $GITHUB_ENV
-          echo "FIREBASE_WEB_STORAGE_BUCKET=${{ secrets.FIREBASE_WEB_STORAGE_BUCKET }}" >> $GITHUB_ENV
-
-          echo "FIREBASE_ANDROID_API_KEY=${{ secrets.FIREBASE_ANDROID_API_KEY }}" >> $GITHUB_ENV
-          echo "FIREBASE_ANDROID_APP_ID=${{ secrets.FIREBASE_ANDROID_APP_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_ANDROID_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_ANDROID_MESSAGING_SENDER_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_ANDROID_PROJECT_ID=${{ secrets.FIREBASE_ANDROID_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_ANDROID_STORAGE_BUCKET=${{ secrets.FIREBASE_ANDROID_STORAGE_BUCKET }}" >> $GITHUB_ENV
-
-          echo "FIREBASE_IOS_API_KEY=${{ secrets.FIREBASE_IOS_API_KEY }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_APP_ID=${{ secrets.FIREBASE_IOS_APP_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_IOS_MESSAGING_SENDER_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_PROJECT_ID=${{ secrets.FIREBASE_IOS_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_STORAGE_BUCKET=${{ secrets.FIREBASE_IOS_STORAGE_BUCKET }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_CLIENT_ID=${{ secrets.FIREBASE_IOS_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_IOS_BUNDLE_ID=${{ secrets.FIREBASE_IOS_BUNDLE_ID }}" >> $GITHUB_ENV
-
       - name: Get Packages
         run: flutter pub get
 
       - name: Run code generator
         run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
 
       - name: Build iOS
         run: flutter build ios -t lib/main_production.dart --release --no-codesign
