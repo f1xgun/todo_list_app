@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:todo_list_app/core/domain/env/env.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -26,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,30 +43,41 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions web = FirebaseOptions(
-    apiKey: Env.firebaseWebApiKey,
-    appId: Env.firebaseWebAppId,
-    messagingSenderId: Env.firebaseWebMessagingSenderId,
-    projectId: Env.firebaseWebProjectId,
-    authDomain: Env.firebaseWebAuthDomain,
-    storageBucket: Env.firebaseWebStorageBucket,
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCiooRGX-xPj_5FKCup3YylmHG7bSeOyw0',
+    appId: '1:87832376050:web:19d047954809323137166b',
+    messagingSenderId: '87832376050',
+    projectId: 'firebase-todo-list-app',
+    authDomain: 'fir-todo-list-app-58f59.firebaseapp.com',
+    storageBucket: 'firebase-todo-list-app.appspot.com',
+    measurementId: 'G-SFCCME5M9V',
   );
 
-  static FirebaseOptions android = FirebaseOptions(
-    apiKey: Env.firebaseAndroidApiKey,
-    appId: Env.firebaseAndoirdAppId,
-    messagingSenderId: Env.firebaseAndroidMessagingSenderId,
-    projectId: Env.firebaseAndroidProjectId,
-    storageBucket: Env.firebaseAndroidStorageBucket,
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAAUX_VDmR2_eAyaAcOJhqXQ3St5j3i3vM',
+    appId: '1:87832376050:android:985f62300e967f2d37166b',
+    messagingSenderId: '87832376050',
+    projectId: 'firebase-todo-list-app',
+    storageBucket: 'firebase-todo-list-app.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: Env.firebaseIosApiKey,
-    appId: Env.firebaseIosAppId,
-    messagingSenderId: Env.firebaseIosMessagingSenderId,
-    projectId: Env.firebaseIosProjectId,
-    storageBucket: Env.firebaseIosStorageBucket,
-    iosClientId: Env.firebaseIosClientId,
-    iosBundleId: Env.firebaseIosBundleId,
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBjNMVzvNwBAtUjGrSJ34ztFVISMbUxJ6Q',
+    appId: '1:87832376050:ios:d4a263d9717a4ede37166b',
+    messagingSenderId: '87832376050',
+    projectId: 'firebase-todo-list-app',
+    storageBucket: 'firebase-todo-list-app.appspot.com',
+    iosClientId: '87832376050-iq1hvqq95ck517qvpgbb8j4bqos63fgf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.todoListApp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBjNMVzvNwBAtUjGrSJ34ztFVISMbUxJ6Q',
+    appId: '1:87832376050:ios:2330881ef3b6f5b737166b',
+    messagingSenderId: '87832376050',
+    projectId: 'firebase-todo-list-app',
+    storageBucket: 'firebase-todo-list-app.appspot.com',
+    iosClientId: '87832376050-tbovm51teevf74ubbfs21cetmohj4tft.apps.googleusercontent.com',
+    iosBundleId: 'com.example.todoListApp.RunnerTests',
   );
 }
