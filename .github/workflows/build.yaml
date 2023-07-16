@@ -43,6 +43,7 @@ jobs:
           --project="firebase-todo-list-app"
           --platforms="android"
           --android-package-name="com.example.todo_list_app"
+          --output-dir="lib/core/config"
           --yes
 
       - name: Start formatter
@@ -93,6 +94,7 @@ jobs:
           --project="firebase-todo-list-app"
           --platforms="android"
           --android-package-name="com.example.todo_list_app"
+          --output-dir="lib/core/config"
           --yes
 
       - name: Run tests
@@ -139,6 +141,7 @@ jobs:
           --project="firebase-todo-list-app"
           --platforms="android"
           --android-package-name="com.example.todo_list_app"
+          --output-dir="lib/core/config"
           --yes
 
       - name: Build APK
@@ -191,6 +194,7 @@ jobs:
           --project="firebase-todo-list-app"
           --platforms="android"
           --android-package-name="com.example.todo_list_app"
+          --output-dir="lib/core/config"
           --yes
 
       - name: Build iOS
