@@ -38,21 +38,24 @@ class HomeScreenTaskList extends StatelessWidget {
         return SliverToBoxAdapter(
           child: Card(
             color: colors.colorBackSecondary,
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: tasks.length + 1,
-              itemBuilder: (context, index) {
-                if (index == tasks.length) {
-                  return Container(
-                    padding: const EdgeInsets.fromLTRB(47, 7, 14, 7),
-                    child: const HomeScreenNewTaskField(),
-                  );
-                } else {
-                  return TaskCard(task: tasks[index]);
-                }
-              },
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: tasks.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == tasks.length) {
+                    return Container(
+                      padding: const EdgeInsets.fromLTRB(47, 7, 14, 7),
+                      child: const HomeScreenNewTaskField(),
+                    );
+                  } else {
+                    return TaskCard(task: tasks[index]);
+                  }
+                },
+              ),
             ),
           ),
         );
