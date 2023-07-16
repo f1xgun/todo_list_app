@@ -142,7 +142,7 @@ jobs:
           --yes
 
       - name: Build APK
-        run: flutter build apk -t lib/main_production.dart
+        run: flutter build apk --flavor production -t lib/main_production.dart
 
       - name: Deploy APK to Github Storage
         uses: actions/upload-artifact@v1
