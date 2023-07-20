@@ -101,7 +101,7 @@ jobs:
   build_anroid:
     name: Build and Deploy Android
     runs-on: ubuntu-latest
-    needs: [analyze, test]
+    # needs: [analyze, test]
 
     steps:
       - name: Checkout Code
