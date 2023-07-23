@@ -1,4 +1,4 @@
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
 import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
@@ -18,8 +18,7 @@ class TasksRepository {
   final NetworkTasksApi _networkStorage;
 
   Future<bool> checkChanges(List<Task> local, List<Task> network) async {
-    return !network.every(local.contains) ||
-        !local.every(network.contains);
+    return !network.every(local.contains) || !local.every(network.contains);
   }
 
   Future<List<Task>> syncStorages() async {

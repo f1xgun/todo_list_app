@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnknownScreen extends StatelessWidget {
   const UnknownScreen({
@@ -8,9 +9,9 @@ class UnknownScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Страница не найдена')),
-      body: const Center(
-        child: Text('Ошибка! Страница не найдена!'),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.pageNotFound)),
+      body: Center(
+        child: Text(AppLocalizations.of(context)!.pageNotFound),
       ),
     );
   }

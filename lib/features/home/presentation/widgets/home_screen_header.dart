@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
+import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -46,7 +48,10 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                         Text(
                           AppLocalizations.of(context)!.appTitle,
                           style: text.titleLarge?.copyWith(
-                            fontSize: 20 + 12 * percentOfShrinkOffset,
+                            fontSize: max(
+                                (text.titleLarge?.fontSize ?? 20) *
+                                    percentOfShrinkOffset,
+                                20),
                           ),
                         ),
                         if (percentOfShrinkOffset > 0)
@@ -61,7 +66,8 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                               ),
                               style: text.bodyMedium?.copyWith(
                                 color: themeData.hintColor,
-                                fontSize: 16 * percentOfShrinkOffset,
+                                fontSize: (text.bodyMedium?.fontSize ?? 16) *
+                                    percentOfShrinkOffset,
                               ),
                             ),
                           ),
@@ -84,6 +90,9 @@ class HomeScreenHeaderDelegate extends SliverPersistentHeaderDelegate {
                           context
                               .read<TasksBloc>()
                               .add(const ToggleVisibilityCompletedFilter());
+                          GetIt.I<AnalyticsLogger>()
+                              .toggleVisibilityTasksFilter(
+                                  state.completedVisible);
                         },
                       ),
                     ),

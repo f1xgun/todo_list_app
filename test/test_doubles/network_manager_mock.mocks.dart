@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:todo_list_app/core/managers/network_manager.dart' as _i3;
+import 'package:todo_list_app/core/data/managers/network_manager.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

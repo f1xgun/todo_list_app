@@ -1,0 +1,192 @@
+name: Test, build and deploy app
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    name: 'Analyze'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Set environment variables
+        run: |
+          echo "TASKS_HOST=${{ secrets.TASKS_HOST }}" >> $GITHUB_ENV
+          echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
+
+      - name: Start formatter
+        run: dart format --set-exit-if-changed .
+
+      - name: Run code generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Start analyzer
+        run: flutter analyze --no-fatal-infos
+
+  test:
+    name: 'Test before build and deploy'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup java-version
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+          cache: gradle
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Set environment variables
+        run: |
+          echo "TASKS_HOST=${{ secrets.TASKS_HOST }}" >> $GITHUB_ENV
+          echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+
+      - name: Get Packages
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
+
+      - name: Run tests
+        run: flutter test
+
+  build_anroid:
+    name: Build and Deploy Android
+    runs-on: ubuntu-latest
+    needs: [analyze, test]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+          cache: gradle
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Set environment variables
+        run: |
+          echo "TASKS_HOST=${{ secrets.TASKS_HOST }}" >> $GITHUB_ENV
+          echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+
+      - name: Get Packages
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
+
+      - name: Build APK
+        run: flutter build apk --flavor production -t lib/main_production.dart
+
+      - name: Deploy APK to Github Storage
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: build/app/outputs/flutter-apk/app-production-release.apk
+
+      - name: Upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_PROD_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-production-release.apk
+
+  build_ios:
+    name: Build iOS
+    runs-on: macos-latest
+    needs: [analyze, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Set environment variables
+        run: |
+          echo "TASKS_HOST=${{ secrets.TASKS_HOST }}" >> $GITHUB_ENV
+          echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+
+      - name: Get Packages
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Firebase config
+        run: curl -sL https://firebase.tools | bash
+      - run: dart pub global activate flutterfire_cli
+      - run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+      - run: flutterfire configure --token ${{ secrets.FIREBASE_TOKEN }}
+          --project="firebase-todo-list-app"
+          --platforms="android"
+          --android-package-name="com.example.todo_list_app"
+          --yes
+
+      - name: Build iOS
+        run: flutter build ios -t lib/main_production.dart --release --no-codesign

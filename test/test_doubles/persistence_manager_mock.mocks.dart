@@ -6,7 +6,8 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:todo_list_app/core/managers/persistence_manager.dart' as _i2;
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -48,13 +49,13 @@ class MockPersistenceManager extends _i1.Mock
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
   @override
-  _i3.Future<String?> getDeviceId() => (super.noSuchMethod(
+  _i3.Future<String> getDeviceId() => (super.noSuchMethod(
         Invocation.method(
           #getDeviceId,
           [],
         ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+        returnValue: _i3.Future<String>.value(''),
+      ) as _i3.Future<String>);
   @override
   _i3.Future<void> generateAndSaveDeviceId() => (super.noSuchMethod(
         Invocation.method(

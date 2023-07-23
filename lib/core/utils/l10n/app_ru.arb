@@ -10,5 +10,7 @@
   "deadlineTitle": "Сделать до",
   "delete": "Удалить",
   "save": "сохранить",
-  "loadTasksError": "Ошибка загрузки задач"
+  "loadTasksError": "Ошибка загрузки задач",
+  "pageNotFound": "Страница не найдена!",
+  "emptyTaskText": "Пустая задача"
 }

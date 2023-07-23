@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/core/navigation/navigation_state.dart';
+import 'package:todo_list_app/core/presentation/navigation/navigation_state.dart';
 import 'package:todo_list_app/features/home/presentation/home_screen.dart';
 import 'package:todo_list_app/features/home/presentation/unknown_screen.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/task_details_screen.dart';
@@ -23,11 +23,8 @@ class CustomRouterDelegate extends RouterDelegate<NavigationState>
     return Navigator(
       key: navigatorKey,
       pages: [
-        MaterialPage(
-          child: HomeScreen(
-            onTaskTap: _showTaskDetails,
-            onNewTaskButtonTap: _showNewTaskScreen,
-          ),
+        const MaterialPage(
+          child: HomeScreen(),
         ),
         if (state?.isDetailsScreen ?? false)
           MaterialPage(
@@ -62,16 +59,6 @@ class CustomRouterDelegate extends RouterDelegate<NavigationState>
   @override
   Future<void> setNewRoutePath(NavigationState configuration) async {
     state = configuration;
-    notifyListeners();
-  }
-
-  void _showTaskDetails(String taskId) {
-    state = NavigationState.taskDetails(taskId);
-    notifyListeners();
-  }
-
-  void _showNewTaskScreen() {
-    state = NavigationState.newTask();
     notifyListeners();
   }
 }

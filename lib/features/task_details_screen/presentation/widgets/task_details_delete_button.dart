@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_list_app/core/styles/app_theme.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_list_app/core/data/managers/navigation_manager.dart';
+import 'package:todo_list_app/core/presentation/styles/app_theme.dart';
+import 'package:todo_list_app/core/utils/analytics_logger.dart';
 import 'package:todo_list_app/features/task_details_screen/presentation/bloc/task_details_bloc.dart';
 import 'package:todo_list_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 
@@ -25,7 +28,8 @@ class TaskDetailsDeleteButton extends StatelessWidget {
               context
                   .read<TasksBloc>()
                   .add(DeleteTask(task: taskBloc.state.currentTask));
-              Navigator.pop(context);
+              GetIt.I<NavigationManager>().pop(context);
+              GetIt.I<AnalyticsLogger>().deleteTask(taskBloc.state.currentTask);
             },
       icon: const Icon(Icons.delete),
       label: Text(AppLocalizations.of(context)!.delete),

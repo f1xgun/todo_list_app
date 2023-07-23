@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/core/styles/color_palette.dart';
+import 'package:todo_list_app/core/presentation/styles/color_palette.dart';
 
 final lightPalette = ColorPalette.light(
   colorSupportSeparator: const Color(0x33000000),

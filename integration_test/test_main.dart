@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo_list_app/app.dart';
-import 'package:todo_list_app/core/managers/network_manager.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/data/managers/network_manager.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/domain/enums/environments.dart';
 import 'package:todo_list_app/features/tasks/data/repository/tasks_repository.dart';
 import 'package:todo_list_app/features/tasks/domain/api/local_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/api/network_tasks_api.dart';
@@ -17,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initDependencies();
   runApp(
-    MainApp(),
+    MainApp(enviroment: Environment.test),
   );
 }
 

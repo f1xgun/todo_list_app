@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:todo_list_app/core/env/env.dart';
-import 'package:todo_list_app/core/error/exceptions.dart';
-import 'package:todo_list_app/core/managers/persistence_manager.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:todo_list_app/core/data/managers/persistence_manager.dart';
+import 'package:todo_list_app/core/domain/env/env.dart';
+import 'package:todo_list_app/core/domain/error/exceptions.dart';
 
 class NetworkManager {
   static const timeoutTime = 5;
@@ -23,7 +24,7 @@ class NetworkManager {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': Env.token
+          'Authorization': 'Bearer ${Env.token}'
         }))
       ..interceptors.add(
         InterceptorsWrapper(
@@ -33,7 +34,9 @@ class NetworkManager {
             handler.next(options);
           },
         ),
-      );
+      )
+      ..interceptors
+          .add(PrettyDioLogger(requestHeader: true, requestBody: true));
     return _dio!;
   }
 

@@ -10,5 +10,7 @@
   "deadlineTitle": "Due date",
   "delete": "Delete",
   "save": "save",
-  "loadTasksError": "Error loading tasks"
+  "loadTasksError": "Error loading tasks",
+  "pageNotFound": "Page not found!",
+  "emptyTaskText": "Empty task"
 }

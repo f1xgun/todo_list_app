@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:todo_list_app/core/error/exceptions.dart';
+import 'package:todo_list_app/core/domain/error/exceptions.dart';
 import 'package:todo_list_app/features/tasks/data/api/network_storage_tasks_api.dart';
 import 'package:todo_list_app/features/tasks/domain/models/response_data.dart';
 import 'package:todo_list_app/features/tasks/domain/models/task_model.dart';

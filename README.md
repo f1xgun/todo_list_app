@@ -1,6 +1,10 @@
 # TODO List App
 
-Todo List App - приложение для создания и выполнения задач. [Скачать APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.2.0/app-release.apk")
+Todo List App - приложение для создания и выполнения задач. 
+
+[Скачать Production APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.3.0/app-production-release.apk) 
+
+[Скачать Development APK](https://github.com/f1xgun/todo_list_app/releases/download/v0.3.0/app-development-release.apk)
 
 ## Deeplinks
 https://todo - На главную страницу
@@ -17,13 +21,15 @@ https://todo/task_details - На страницу создания новой т
 <img src="https://github.com/f1xgun/todo_list_app/assets/88651829/3c9bfcf3-0c25-45bb-928f-09b12fa21d2e" width="300">
 
 ## Используемые зависимости
-**State management:** [`bloc`](https://pub.dev/packages/bloc) + [`equatable`](https://pub.dev/packages/equatable)
+**State management:** [`flutter_bloc`](https://pub.dev/packages/flutter_bloc) + [`equatable`](https://pub.dev/packages/equatable)
 
-**Logs:** [`logging`](https://pub.dev/packages/logging)
+**Logs:** [`logging`](https://pub.dev/packages/logging) + [`pretty_dio_logger`](https://pub.dev/packages/pretty_dio_logger)
 
 **ID Generator:** [`uuid`](https://pub.dev/packages/uuid)
 
 **Internationalization:** [`intl`](https://pub.dev/packages/intl)
+
+**Code generation for data-models:** [`freezed`](https://pub.dev/packages/freezed)
 
 **JSON Codegeneration:** [`json_serializable`](https://pub.dev/packages/json_serializable) + [`json_annotation`](https://pub.dev/packages/json_annotation)
 
@@ -33,10 +39,16 @@ https://todo/task_details - На страницу создания новой т
 
 **DI:** [`get_it`](https://pub.dev/packages/get_it)
 
+**Firebase Services:** [`firebase_core`](https://pub.dev/packages/firebase_core) + [`firebase_crashlytics`](https://pub.dev/packages/firebase_crashlytics) + [`firebase_remote_config`](https://pub.dev/packages/firebase_remote_config)
+
+**Mock data:** [`mockito`](https://pub.dev/packages/mockito)
+
+**Environment variables:** [`envied`](https://pub.dev/packages/envied)
+
 ## Реализованные фичи
  - Логгирование
  - Локализация
- - Смена темы в зависимости от темы в системе ( пока зависит только от темы при загрузке )
+ - Смена темы в зависимости от темы в системе ( зависит от темы в системе )
  - Просмотр списка задач
  - Добавление/редактирование/удаление задач
  - Скрытие выполненых задач
@@ -51,6 +63,13 @@ https://todo/task_details - На страницу создания новой т
  - DI
  - Navigator 2.0
  - Deeplinks
+ - Реализована поддержка лендскейп-ориентации и больших экранов
+ - Реализована работа с Remote Configs, работает рантайм-переключение цвета важности
+ - Подключен и настроен Firebase Crashlytics
+ - Собирается аналитика по событиям с помощью Firebase Analytics
+ - Настроен CI + распространениче через Firebase App Distribution
+ - Поддержаны несколько флейворов: для разработки и продакшена
+
 
 ## Архитектура
 В проекте используется feature-first структура.
@@ -75,4 +94,5 @@ https://todo/task_details - На страницу создания новой т
 TASKS_HOST=<url>
 TOKEN=<token>
 ```
-Затем необходимо выполнить кодогенерацию с помощью команды ```dart run build_runner build```, после этого можно запускать проект и всё должно успешно работать. 
+
+Затем необходимо выполнить кодогенерацию с помощью команды ```dart run build_runner build```. После выполнить конфигурацию проекта для подключения к проекту на firebase, для этого необходимо выполнить команду ```flutterfire configure``` и выбрать ваш проект, в котором подключены Firebase Crashlytics, Remote Configs, Firebase Analytics. После того, как сгенерируются все файлы, можно запускать проект и всё должно успешно работать. 
